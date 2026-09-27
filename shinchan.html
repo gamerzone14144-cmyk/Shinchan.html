@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shinchan Movies List - TANVEER EDITZ</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background-color: #f8f9fa;
+            color: #212529;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+        .main-title {
+            text-align: center;
+            color: #0B2545;
+            font-size: 28px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+        }
+        .sub-title {
+            text-align: center;
+            color: #E63946;
+            font-size: 18px;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+        }
+        .meta-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13px;
+            font-weight: 700;
+            color: #495057;
+            padding: 8px 0;
+            border-bottom: 2px solid #dee2e6;
+            margin-bottom: 12px;
+        }
+        .release-info {
+            font-size: 12px;
+            font-style: italic;
+            color: #6c757d;
+            margin-bottom: 10px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 25px;
+            font-size: 12px;
+        }
+        th {
+            background-color: #f1f3f5;
+            color: #0B2545;
+            font-weight: 700;
+            text-align: left;
+            padding: 10px 8px;
+            border: 1px solid #dee2e6;
+        }
+        td {
+            padding: 8px;
+            border: 1px solid #dee2e6;
+            vertical-align: middle;
+        }
+        tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        .movie-no {
+            font-weight: 700;
+            color: #0B2545;
+            white-space: nowrap;
+        }
+        .section-divider {
+            margin: 30px 0;
+            border: 0;
+            border-top: 2px dashed #ced4da;
+        }
+        .upcoming-box {
+            background-color: #e8f4f8;
+            border-left: 4px solid #0B2545;
+            padding: 12px 15px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+        }
+        .upcoming-title {
+            font-weight: 700;
+            color: #0B2545;
+            font-size: 14px;
+            margin-bottom: 4px;
+        }
+        .credit-notice {
+            background-color: #fff3cd;
+            border: 1px solid #ffeba8;
+            color: #856404;
+            padding: 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            text-align: center;
+            font-weight: 600;
+            margin-top: 15px;
+        }
+
+        /* Print Settings for PDF / 1-Page Fit */
+        @media print {
+            body { padding: 0; background: #fff; }
+            .container { box-shadow: none; padding: 10px; max-width: 100%; }
+            table { font-size: 10px; margin-bottom: 15px; }
+            th, td { padding: 4px 6px; }
+            .main-title { font-size: 22px; }
+            .sub-title { font-size: 15px; }
+            .section-divider { margin: 15px 0; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- HUNGAMA DUBBED SECTION -->
+    <h1 class="main-title">HUNGAMA DUBBED</h1>
+    <h2 class="sub-title">SHINCHAN MOVIES</h2>
+
+    <div class="meta-bar">
+        <span>LIST BY: TANVEER EDITZ</span>
+        <span>DATE: 27 September 2026</span>
+    </div>
+    <div class="release-info">Hungama TV Release Period: June 19, 2006 – 2024</div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>S.No.</th>
+                <th>India Dub Name</th>
+                <th>Japan Original Name</th>
+                <th>India Air Date</th>
+                <th>Japan Release Date</th>
+                <th>Sony YAY Redub Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="movie-no">Movie 1</td>
+                <td>Shin Chan in Action Kamen vs Higure Rakshas</td>
+                <td>Action Kamen vs Haigure Maô</td>
+                <td>29 August 2010</td>
+                <td>24 April 1993</td>
+                <td>Redubbed by Sony YAY! (Action Kamen vs Higure Rakshas)</td>
+            </tr>
+            <tr>
+                <td class="movie-no">Movie 2</td>
+                <td>Shin Chan and the Treasures of the Buri Buri Kingdom</td>
+                <td>Buriburi Ôkoku no Hihô</td>
+                <td>17 October 2010</td>
+                <td>23 April 1994</td>
+                <td>Redubbed by Sony YAY! (The Secrets of the Buri Buri Kingdom)</td>
+            </tr>
+            <tr>
+                <td class="movie-no">Movie 4</td>
+                <td>Shin Chan Movie: Adventures in Henderland</td>
+                <td>Hendârando no Daibôken</td>
+                <td>18 December 2011</td>
+                <td>13 April 1996</td>
+                <td>Redubbed by Sony YAY! (Adventures in Henderland)</td>
+            </tr>
+            <tr>
+                <td class="movie-no">Movie 5</td>
+                <td>Shin Chan in Dark Tama Tama Thrilling Chase</td>
+                <td>Ankoku Tamatama Daitsuiseki</td>
+                <td>15 October 2016</td>
+                <td>19 April 1997</td>
+                <td>Redubbed by Sony YAY! (Dark Tama Tama Thrilling Chase)</td>
+            </tr>
+            <tr>
+                <td class="movie-no">Movie 8</td>
+                <td>Shin Chan in Bungle in the Jungle</td>
+                <td>Arashi o Yobu Janguru!</td>
+                <td>1 April 2011</td>
+                <td>22 April 2000</td>
+                <td>Redubbed by Sony YAY! (Bungle in the Jungle)</td>
+            </tr>
+            <tr>
+                <td class="movie-no">Movie 11</td>
+                <td>Shin Chan Masala Story</td>
+                <td>Arashi wo Yobu Eikou no Yakiniku Road</td>
+                <td>26 July 2014</td>
+                <td>19 April 2003</td>
+                <td>Redubbed by Sony YAY! (Masala Story (Yummy in Tummy))</td>
+            </tr>
+            <tr>
+                <td class="movie-no">Movie 16</td>
+                <td>Shin Chan Movie: The Golden Sword</td>
+                <td>Chô Arashi wo Yobu Kinpoko no Yûsha</td>
+                <td>26 October 2013</td>
+                <td>19 April 2008</td>
+                <td>Non</td>
+            </tr>
+            <tr>
+                <td class="movie-no">Movie 18</td>
+                <td>Shin Chan The Movie Villain aur Dulhan</td>
+                <td>Chôshikû! Arashi wo Yobu Ora no Hanayome</td>
+                <td>28 September 2013</td>
+                <td>17 April 2010</td>
+                <td>Redubbed by Sony YAY! (Villain aur Dulhan)</td>
+            </tr>
+            <tr>
+                <td class="movie-no">Movie 19</td>
+                <td>Shin Chan Movie The Spy</td>
+                <td>Arashi o Yobu! Ougon no Supai Daisakusen</td>
+                <td>21 June 2014</td>
+                <td>16 April 2011</td>
+                <td>Redubbed by Sony YAY! (The Spy)</td>
+            </tr>
+            <tr>
+                <td class="movie-no">Movie 20</td>
+                <td>Shin Chan The Movie Himawari Banegi Rajkumari</td>
+                <td>Arashi o Yobu! Ora to Uchuu to Purinsesu</td>
+                <td>22 March 2014</td>
+                <td>14 April 2012</td>
+                <td>Non</td>
+            </tr>
+            <tr>
+                <td class="movie-no">Movie 21</td>
+                <td>Shin Chan in Very Very Tasty Tasty</td>
+                <td>Bakauma! B-kyu Gurume Sabaibaru!!</td>
+                <td>19 July 2014</td>
+                <td>20 April 2013</td>
+                <td>Redubbed by Sony YAY! (Food for Survival!!)</td>
+            </tr>
+            <tr>
+                <td class="movie-no">Movie 22</td>
+                <td>Shin Chan Movie: Robot Dad</td>
+                <td>Gachinko! Gyakushu no Robo To-chan</td>
+                <td>13 March 2015</td>
+                <td>19 April 2014</td>
+                <td>Redubbed by Sony YAY! (Robot Dad)</td>
+            </tr>
+            <tr>
+                <td class="movie-no">Movie 23</td>
+                <td>Shin Chan Movie: Kaanta Lagaa</td>
+                <td>Ora no Hikkoshi Monogatari: Saboten Daisuugeki</td>
+                <td>10 February 2017</td>
+                <td>18 April 2015</td>
+                <td>Redubbed by Sony YAY! (Kaanta Lagaa (Cactus Attack!))</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <hr class="section-divider">
+
+    <!-- SONY YAY DUBBED SECTION -->
+    <h1 class="main-title">SONY YAY DUBBED</h1>
+    <h2 class="sub-title">SHINCHAN MOVIES</h2>
+
+    <div class="meta-bar">
+        <span>LIST BY: TANVEER EDITZ</span>
+        <span>DATE: 27 September 2026</span>
+    </div>
+    <div class="release-info">Sony YAY! Release Period: May 20, 2024 – Present</div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>S.No.</th>
+                <th>India Dub Name</th>
+                <th>Japan Original Name</th>
+                <th>India Air Date (Sony YAY!)</th>
+                <th>Japan Release Date</th>
+                <th>Dual Dub Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td class="movie-no">Movie 1</td><td>Shin chan Movie: Action Kamen vs Higure Rakshas</td><td>Action Kamen vs Haigure Maô</td><td>25 May 2024</td><td>24 July 1993</td><td>Dual Dub</td></tr>
+            <tr><td class="movie-no">Movie 2</td><td>Shin chan Movie: The Secrets of the Buri Buri Kingdom</td><td>Buriburi Ôkoku no Hihô</td><td>26 May 2024</td><td>23 April 1994</td><td>Dual Dub</td></tr>
+            <tr><td class="movie-no">Movie 3</td><td>Shin chan Movie: Mr. Smelly's Ambition</td><td>Unkokusai no Yabou</td><td>1 June 2024</td><td>15 April 1995</td><td>Non (Sony YAY Exclusive)</td></tr>
+            <tr><td class="movie-no">Movie 4</td><td>Shin chan Movie: Adventures in Henderland</td><td>Hendârando no Daibôken</td><td>8 June 2024</td><td>13 April 1996</td><td>Dual Dub</td></tr>
+            <tr><td class="movie-no">Movie 5</td><td>Shin chan Movie: Dark Tama Tama Thrilling Chase</td><td>Ankoku Tamatama Daitsuiseki</td><td>9 June 2024</td><td>19 April 1997</td><td>Dual Dub</td></tr>
+            <tr><td class="movie-no">Movie 6</td><td>Shin chan Movie: Mission Pig's Hoof</td><td>Dengeki! Buta no Hizume Daisakusen</td><td>15 June 2024</td><td>18 April 1998</td><td>Non (Sony YAY Exclusive)</td></tr>
+            <tr><td class="movie-no">Movie 7</td><td>Shin chan Movie: Burst! Hot Spring Battle</td><td>Bakuhatsu! Onsen Wakuwaku Daikessen</td><td>23 June 2024</td><td>17 April 1999</td><td>Non (Sony YAY Exclusive)</td></tr>
+            <tr><td class="movie-no">Movie 8</td><td>Shin chan Movie: Bungle in the Jungle</td><td>Arashi o Yobu Janguru!</td><td>16 June 2024</td><td>22 April 2000</td><td>Dual Dub</td></tr>
+            <tr><td class="movie-no">Movie 9</td><td>Shin chan Movie: The Adult Empire Strikes Back</td><td>Arashi o Yobu: Môretsu! Otona Teikoku no Gyakushû</td><td>30 June 2024</td><td>21 April 2001</td><td>Non (Sony YAY Exclusive)</td></tr>
+            <tr><td class="movie-no">Movie 10</td><td>Shin chan Movie: The Battle of the Warring States</td><td>Arashi o Yobu: Appare! Sengoku Daikassen</td><td>7 July 2024</td><td>20 April 2002</td><td>Non (Sony YAY Exclusive)</td></tr>
+            <tr><td class="movie-no">Movie 11</td><td>Shin chan Movie: Masala Story (Yummy in Tummy)</td><td>Arashi wo Yobu Eikou no Yakiniku Road</td><td>22 June 2024</td><td>19 April 2003</td><td>Dual Dub</td></tr>
+            <tr><td class="movie-no">Movie 12</td><td>Shin chan Movie: Kasukabe Boys of the Evening Sun</td><td>Arashi wo Yobu! Yûhi no Kasukabe Bôizu</td><td>14 July 2024</td><td>17 April 2004</td><td>Non (Sony YAY Exclusive)</td></tr>
+            <tr><td class="movie-no">Movie 13</td><td>Shin chan Movie: 3 Minutes Me Duniya Tabahi</td><td>Densetsu o Yobu Buriburi: Sanpun Bokkiri Daishingeki</td><td>21 July 2024</td><td>16 April 2005</td><td>Non (Sony YAY Exclusive)</td></tr>
+            <tr><td class="movie-no">Movie 14</td><td>Shin chan Movie: Dance! Amigo!</td><td>Densetsu wo Yobu Odore! Amîgo!</td><td>28 July 2024</td><td>15 April 2006</td><td>Non (Sony YAY Exclusive)</td></tr>
+            <tr><td class="movie-no">Movie 15</td><td>Shin chan Movie: Shiro ka Dhamaka (The Singing Bomb!)</td><td>Arashi o Yobu: Utau Ketsudake Bakudan!</td><td>4 August 2024</td><td>21 April 2007</td><td>Non (Sony YAY Exclusive)</td></tr>
+            <tr><td class="movie-no">Movie 17</td><td>Shin chan Movie: Kasukabe Wild Kingdom</td><td>Otakebi! Kasukabe Yashiô Ôkoku</td><td>11 August 2024</td><td>18 April 2009</td><td>Non (Sony YAY Exclusive)</td></tr>
+            <tr><td class="movie-no">Movie 18</td><td>Shin chan Movie: Villain aur Dulhan</td><td>Chôshikû! Arashi wo Yobu Ora no Hanayome</td><td>6 July 2024</td><td>17 April 2010</td><td>Dual Dub</td></tr>
+            <tr><td class="movie-no">Movie 19</td><td>Shin chan Movie: The Spy</td><td>Arashi o Yobu! Ougon no Supai Daisakusen</td><td>7 July 2024</td><td>16 April 2011</td><td>Dual Dub</td></tr>
+            <tr><td class="movie-no">Movie 21</td><td>Shin chan Movie: Food for Survival!!</td><td>Bakauma! B-kyu Gurume Sabaibaru!!</td><td>14 July 2024</td><td>20 April 2013</td><td>Dual Dub</td></tr>
+            <tr><td class="movie-no">Movie 22</td><td>Shin chan Movie: Robot Dad</td><td>Gachinko! Gyakushu no Robo To-chan</td><td>20 July 2024</td><td>19 April 2014</td><td>Dual Dub</td></tr>
+            <tr><td class="movie-no">Movie 23</td><td>Shin chan Movie: Kaanta Lagaa (Cactus Attack!)</td><td>Ora no Hikkoshi Monogatari: Saboten Daisuugeki</td><td>21 July 2024</td><td>18 April 2015</td><td>Dual Dub</td></tr>
+            <tr><td class="movie-no">Movie 24</td><td>Shin chan Movie: In the Dreaming World</td><td>Bakusui! Yumemi Wârudo Daitotsugeki</td><td>25 August 2024</td><td>16 April 2016</td><td>Non (Sony YAY Exclusive)</td></tr>
+            <tr><td class="movie-no">Movie 25</td><td>Shin chan Movie: Invasion!! Alien Shiriri</td><td>Shûrai!! Uchûjin Shiriri</td><td>1 September 2024</td><td>15 April 2017</td><td>Non (Sony YAY Exclusive)</td></tr>
+            <tr><td class="movie-no">Movie 26</td><td>Shin chan Movie: Kung Fu Boys ~Ramen Rebellion~</td><td>Bakumori! Kanfû Bôizu ~Râmen Tairan~</td><td>8 September 2024</td><td>13 April 2018</td><td>Non (Sony YAY Exclusive)</td></tr>
+            <tr><td class="movie-no">Movie 27</td><td>Shin chan Movie: Dangerous Family Holiday</td><td>Shinkon Ryokô Harikên ~UshinわれたHiroshi~</td><td>15 September 2024</td><td>19 April 2019</td><td>Non (Sony YAY Exclusive)</td></tr>
+            <tr><td class="movie-no">Movie 28</td><td>Shin chan Movie: Crash! Rakuga Kingdom</td><td>Gekitotsu! Rakugakingudamu to Hobo Yonin no Yûsha</td><td>22 September 2024</td><td>11 September 2020</td><td>Non (Sony YAY Exclusive)</td></tr>
+            <tr><td class="movie-no">Movie 29</td><td>Shin chan Movie: The Mystery of Tenkasu Academy</td><td>Nazo Meki! Hana no Tenkasu Gakuen</td><td>13 October 2024</td><td>30 July 2021</td><td>Non (Sony YAY Exclusive)</td></tr>
+            <tr><td class="movie-no">Movie 30</td><td>Shin chan Movie: The Legends of Ninja Mononoke</td><td>Mononoke Ninja Chinpûden</td><td>27 October 2024</td><td>22 April 2022</td><td>Non (Sony YAY Exclusive)</td></tr>
+            <tr><td class="movie-no">Movie 31</td><td>New Dimension! Shin chan Movie: Battle of Supernatural Powers</td><td>Shin Jigen! Kureyon Shin-chan za Mûbî Chônôryoku Daikessen</td><td>10 November 2024</td><td>4 August 2023</td><td>Non (Sony YAY Exclusive)</td></tr>
+            <tr><td class="movie-no">Movie 32</td><td>Shin chan Movie: Our Dinosaur Diary</td><td>Ora-tachi no Kyôryû Nikki</td><td>Coming Soon (Mid 2026)</td><td>9 August 2024</td><td>Non (Sony YAY Exclusive)</td></tr>
+            <tr><td class="movie-no">Movie 33</td><td>Shin chan Movie: The Spicy Kasukabe Dancers</td><td>Chô Karê! Shakunetsu no Kasukabe Dansāzu</td><td>Upcoming (Late 2026)</td><td>8 August 2025</td><td>Non (Sony YAY Exclusive)</td></tr>
+        </tbody>
+    </table>
+
+    <div class="upcoming-box">
+        <div class="upcoming-title">UPCOMING MOVIE / NEXT ANNOUNCEMENT</div>
+        <div>Crayon Shinchan the Movie: Spooky! My Yokai Vacation</div>
+    </div>
+
+    <div class="credit-notice">
+        CRITICAL CREDIT NOTICE: Created and Curated by TANVEER EDITZ. If this list/document/website is forwarded or shared anywhere, full credit must remain to TANVEER EDITZ.
+    </div>
+
+</div>
+
+</body>
+</html>
