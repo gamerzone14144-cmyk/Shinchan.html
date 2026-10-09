@@ -1,0 +1,34 @@
+{
+  "posts": [
+    {
+      "id": "1",
+      "title": "Demon Slayer S4",
+      "type": "anime",
+      "image": "https://image.tmdb.org/t/p/w500/xUfRZu2mi8jH6SzQEJGP6tjBuYj.jpg",
+      "link": "https://t.me/Dorutochan/1",
+      "date": "2025-01-15",
+      "tags": ["action", "hindi-dub"],
+      "trending": true
+    },
+    {
+      "id": "2",
+      "title": "Shinchan New Ep",
+      "type": "cartoon",
+      "image": "https://image.tmdb.org/t/p/w500/example2.jpg",
+      "link": "https://t.me/Dorutochan/2",
+      "date": "2025-01-14",
+      "tags": ["comedy", "hindi"],
+      "trending": true
+    },
+    {
+      "id": "3",
+      "title": "One Piece",
+      "type": "anime",
+      "image": "https://image.tmdb.org/t/p/w500/example3.jpg",
+      "link": "https://t.me/Dorutochan/3",
+      "date": "2025-01-13",
+      "tags": ["adventure"],
+      "trending": false
+    }
+  ]
+}
