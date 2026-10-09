@@ -2,876 +2,253 @@
 <html lang="hi">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-<meta name="theme-color" content="#1e1b4b">
-<title>Shinchan Movies List - TANVEER EDITZ</title>
-<style>
-/* ============ RESET ============ */
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-html{font-size:16px;scroll-behavior:smooth;-webkit-text-size-adjust:100%;}
-@media (min-width:1800px){ html{font-size:19px;} }
-@media (min-width:2400px){ html{font-size:23px;} }
-
-/* ============ HARMONIOUS PALETTE ============ */
-:root{
-  --indigo-900:#1e1b4b;
-  --indigo-800:#312e81;
-  --indigo-700:#4338ca;
-  --indigo-600:#4f46e5;
-  --violet-600:#7c3aed;
-  --amber-500:#f59e0b;
-  --amber-400:#fbbf24;
-  --amber-300:#fcd34d;
-  --pink-500:#ec4899;
-  --green-500:#10b981;
-  --rose-500:#f43f5e;
-
-  --text:#1e1b4b;
-  --text-soft:#4b5563;
-  --muted:#6b7280;
-  --border:#e5e7eb;
-  --bg-soft:#f9fafb;
-  --bg-tint:#f5f3ff;
-}
-
-body{
-  font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;
-  color:var(--text);
-  background:var(--indigo-900);
-  min-height:100vh;
-  padding:clamp(10px,2vw,28px);
-  overflow-x:hidden;
-  position:relative;
-  line-height:1.5;
-  -webkit-tap-highlight-color:transparent;
-}
-
-/* ============ ANIMATED BACKGROUND ============ */
-.bg-layer{
-  position:fixed;inset:0;z-index:-3;
-  background:linear-gradient(135deg,#1e1b4b 0%,#312e81 25%,#4c1d95 55%,#312e81 80%,#1e1b4b 100%);
-  background-size:300% 300%;
-  animation:bgShift 24s ease-in-out infinite;
-}
-@keyframes bgShift{
-  0%,100%{background-position:0% 50%;}
-  50%{background-position:100% 50%;}
-}
-.orb{
-  position:fixed;border-radius:50%;filter:blur(80px);
-  opacity:.28;z-index:-2;pointer-events:none;
-}
-.orb.a{width:40vmin;height:40vmin;background:#f59e0b;top:-10vmin;left:-8vmin;animation:float1 18s ease-in-out infinite;}
-.orb.b{width:46vmin;height:46vmin;background:#7c3aed;bottom:-14vmin;right:-10vmin;animation:float2 22s ease-in-out infinite;}
-.orb.c{width:32vmin;height:32vmin;background:#ec4899;top:48%;left:58%;animation:float3 26s ease-in-out infinite;}
-@keyframes float1{0%,100%{transform:translate(0,0)}50%{transform:translate(6vw,8vh)}}
-@keyframes float2{0%,100%{transform:translate(0,0)}50%{transform:translate(-7vw,-6vh)}}
-@keyframes float3{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-5vw,5vh) scale(1.15)}}
-
-.bg-grid{
-  position:fixed;inset:0;z-index:-1;pointer-events:none;
-  background-image:radial-gradient(rgba(255,255,255,.12) 1px, transparent 1px);
-  background-size:34px 34px;
-  opacity:.3;
-  mask-image:radial-gradient(circle at 50% 30%, #000 20%, transparent 78%);
-  -webkit-mask-image:radial-gradient(circle at 50% 30%, #000 20%, transparent 78%);
-}
-
-/* ============ INTRO ============ */
-.intro{
-  position:fixed;inset:0;z-index:9999;
-  display:flex;align-items:center;justify-content:center;
-  background:radial-gradient(circle at 50% 40%,#312e81 0%,#1e1b4b 60%,#0f0d2e 100%);
-  animation:introOut .7s ease 2.4s forwards;
-}
-@keyframes introOut{to{opacity:0;visibility:hidden;}}
-.intro-inner{text-align:center;padding:20px;animation:introIn .9s cubic-bezier(.2,.8,.25,1) both;}
-@keyframes introIn{
-  from{opacity:0;transform:translateY(26px) scale(.94);filter:blur(6px);}
-  to{opacity:1;transform:none;filter:blur(0);}
-}
-.intro-badge{
-  display:inline-block;font-size:clamp(.6rem,1.4vw,.85rem);
-  letter-spacing:.32em;text-transform:uppercase;font-weight:700;
-  color:var(--amber-400);
-  border:1px solid rgba(251,191,36,.4);
-  border-radius:999px;padding:.45em 1.2em;margin-bottom:1.1em;
-  background:rgba(251,191,36,.08);
-}
-.intro-title{
-  font-size:clamp(1.9rem,7vw,4.4rem);font-weight:900;
-  letter-spacing:.06em;color:#fff;line-height:1.05;
-  text-transform:uppercase;
-  text-shadow:0 6px 30px rgba(0,0,0,.5);
-}
-.intro-title span{
-  background:linear-gradient(90deg,#fbbf24,#ec4899,#7c3aed,#fbbf24);
-  background-size:300% 100%;
-  -webkit-background-clip:text;background-clip:text;
-  -webkit-text-fill-color:transparent;color:transparent;
-  animation:shine 3.5s linear infinite;
-}
-@keyframes shine{to{background-position:300% 0;}}
-.intro-line{
-  width:min(240px,55vw);height:3px;margin:1.1em auto;
-  border-radius:99px;
-  background:linear-gradient(90deg,transparent,#f59e0b,#7c3aed,transparent);
-  animation:lineGrow 1.1s ease .35s both;
-}
-@keyframes lineGrow{from{transform:scaleX(0);opacity:0}to{transform:scaleX(1);opacity:1}}
-.intro-sub{
-  color:#c7d2fe;font-size:clamp(.75rem,2vw,1.05rem);
-  letter-spacing:.18em;text-transform:uppercase;font-weight:600;
-}
-
-/* ============ CONTAINER ============ */
-.container{
-  max-width:1240px;margin:0 auto;
-  background:#fff;
-  border-radius:clamp(12px,1.6vw,20px);
-  padding:clamp(16px,2.6vw,40px);
-  box-shadow:0 25px 65px rgba(15,13,46,.5), 0 0 0 1px rgba(255,255,255,.06);
-  animation:cardIn .8s cubic-bezier(.2,.8,.25,1) 2.2s both;
-  position:relative;z-index:1;
-}
-@keyframes cardIn{
-  from{opacity:0;transform:translateY(28px);}
-  to{opacity:1;transform:none;}
-}
-
-/* ============ BRAND LOGO (TOP CENTER) ============ */
-.brand-header{
-  text-align:center;
-  padding-bottom:clamp(14px,2.5vw,26px);
-  margin-bottom:clamp(18px,3vw,32px);
-  border-bottom:2px solid var(--bg-tint);
-  position:relative;
-}
-.brand-header::after{
-  content:'';
-  position:absolute;left:50%;bottom:-2px;
-  width:min(120px,30vw);height:4px;
-  transform:translateX(-50%);
-  border-radius:99px;
-  background:linear-gradient(90deg,var(--amber-500),var(--violet-600),var(--pink-500));
-}
-.logo-slot{
-  display:inline-flex;align-items:center;justify-content:center;
-  min-height:clamp(60px,12vw,120px);
-  padding:clamp(6px,1.5vw,14px);
-}
-.logo-slot img{
-  max-width:min(280px,65vw);
-  max-height:clamp(60px,12vw,120px);
-  width:auto;height:auto;
-  display:block;
-  filter:drop-shadow(0 6px 18px rgba(30,27,75,.15));
-}
-.logo-slot .fallback-text{
-  display:none;
-  font-size:clamp(1.4rem,4vw,2.6rem);
-  font-weight:900;letter-spacing:.08em;
-  text-transform:uppercase;
-  background:linear-gradient(90deg,var(--indigo-800),var(--violet-600),var(--amber-500));
-  -webkit-background-clip:text;background-clip:text;
-  -webkit-text-fill-color:transparent;color:transparent;
-}
-.logo-slot.fallback img{display:none;}
-.logo-slot.fallback .fallback-text{display:block;}
-
-/* ============ SECTION HEADER WITH LOGO ============ */
-.section-head{
-  display:flex;align-items:center;justify-content:center;
-  gap:clamp(10px,2vw,20px);
-  flex-wrap:wrap;
-  margin-bottom:.4em;
-}
-.section-logo{
-  flex-shrink:0;
-  display:inline-flex;align-items:center;justify-content:center;
-  min-width:clamp(46px,9vw,84px);
-  min-height:clamp(46px,9vw,84px);
-  padding:6px;
-}
-.section-logo img{
-  max-width:clamp(46px,9vw,84px);
-  max-height:clamp(46px,9vw,84px);
-  width:auto;height:auto;display:block;
-  filter:drop-shadow(0 4px 12px rgba(30,27,75,.18));
-}
-.section-logo .fallback-emoji{
-  display:none;
-  font-size:clamp(1.6rem,4.5vw,2.6rem);
-  line-height:1;
-}
-.section-logo.fallback img{display:none;}
-.section-logo.fallback .fallback-emoji{display:block;}
-.section-text{
-  display:flex;flex-direction:column;
-  align-items:center;text-align:center;
-}
-
-/* ============ HEADINGS ============ */
-.main-title{
-  color:var(--indigo-900);
-  font-size:clamp(1.2rem,3.2vw,2.2rem);
-  font-weight:900;text-transform:uppercase;
-  letter-spacing:.06em;line-height:1.15;
-  text-align:center;
-}
-.sub-title{
-  color:var(--violet-600);
-  font-size:clamp(.8rem,2vw,1.3rem);
-  font-weight:800;text-transform:uppercase;
-  letter-spacing:.14em;margin-top:.25em;
-  text-align:center;
-}
-.title-underline{
-  width:min(180px,40vw);height:4px;margin:.7em auto 1em;
-  border-radius:99px;
-  background:linear-gradient(90deg,var(--indigo-800),var(--violet-600),var(--amber-500));
-}
-
-/* ============ META BAR ============ */
-.meta-bar{
-  display:flex;flex-wrap:wrap;gap:6px 14px;
-  justify-content:space-between;align-items:center;
-  font-size:clamp(.65rem,1.5vw,.9rem);
-  font-weight:700;color:var(--text-soft);
-  padding:.6em 0;
-  border-bottom:2px solid var(--border);
-}
-.release-info{
-  font-size:clamp(.62rem,1.4vw,.85rem);
-  font-style:italic;color:var(--muted);
-  margin:.6em 0 .9em;
-}
-
-/* ============ TABLE ============ */
-.table-wrap{
-  width:100%;overflow-x:auto;
-  -webkit-overflow-scrolling:touch;
-  border-radius:12px;
-  margin-bottom:clamp(18px,3vw,30px);
-}
-table{
-  width:100%;border-collapse:collapse;
-  font-size:clamp(.7rem,1.05vw,.98rem);
-  min-width:640px;
-}
-th{
-  background:linear-gradient(180deg,#f5f3ff,#ede9fe);
-  color:var(--indigo-900);
-  font-weight:800;text-align:left;
-  padding:.8em .6em;
-  border:1px solid #e0e7ff;
-  text-transform:uppercase;
-  letter-spacing:.04em;
-  font-size:.9em;
-  position:sticky;top:0;z-index:2;
-}
-td{
-  padding:.65em .6em;
-  border:1px solid var(--border);
-  vertical-align:middle;
-}
-tbody tr{
-  transition:background .18s ease, transform .15s ease;
-  cursor:pointer;position:relative;overflow:hidden;
-}
-tbody tr:nth-child(even){background:var(--bg-soft);}
-tbody tr:hover{background:#fef3c7;}
-tbody tr:active{transform:scale(.995);}
-.movie-no{
-  font-weight:800;color:var(--indigo-800);white-space:nowrap;
-}
-
-/* Ripple */
-.ripple{
-  position:absolute;border-radius:50%;
-  background:rgba(124,58,237,.28);
-  transform:scale(0);
-  animation:rippleAnim .6s linear;
-  pointer-events:none;
-}
-@keyframes rippleAnim{
-  to{transform:scale(4);opacity:0;}
-}
-
-/* ============ DIVIDER ============ */
-.section-divider{
-  margin:clamp(26px,4.5vw,50px) 0;
-  border:0;height:2px;
-  background:repeating-linear-gradient(90deg,#ddd6fe 0 12px,transparent 12px 24px);
-}
-
-/* ============ UPCOMING BOX ============ */
-.upcoming-box{
-  background:linear-gradient(135deg,#fef3c7,#fde68a);
-  border-left:5px solid var(--amber-500);
-  padding:clamp(12px,1.8vw,20px) clamp(14px,2vw,22px);
-  border-radius:12px;
-  margin-bottom:clamp(16px,2.5vw,24px);
-}
-.upcoming-title{
-  font-weight:900;color:var(--indigo-900);
-  font-size:clamp(.72rem,1.6vw,1rem);
-  letter-spacing:.08em;text-transform:uppercase;
-  margin-bottom:.4em;
-}
-.upcoming-box div:last-child{
-  font-size:clamp(.72rem,1.6vw,1rem);
-  font-weight:700;color:#78350f;
-}
-
-/* ============ CREDIT ============ */
-.credit-notice{
-  background:linear-gradient(135deg,#f5f3ff,#ede9fe);
-  border:1px solid #ddd6fe;
-  color:#5b21b6;
-  padding:clamp(12px,1.8vw,20px);
-  border-radius:12px;
-  font-size:clamp(.66rem,1.5vw,.92rem);
-  text-align:center;font-weight:700;
-  line-height:1.6;letter-spacing:.02em;
-  margin-bottom:1.2em;
-}
-
-/* ============ TELEGRAM ============ */
-.telegram-section{text-align:center;margin:1.6em 0 1em;}
-.telegram-card{
-  display:inline-flex;align-items:center;gap:12px;
-  background:linear-gradient(135deg,var(--indigo-800),var(--violet-600));
-  color:#fff;
-  padding:clamp(12px,2vw,18px) clamp(20px,3vw,32px);
-  border-radius:999px;
-  font-weight:800;
-  font-size:clamp(.85rem,2vw,1.2rem);
-  letter-spacing:.06em;cursor:pointer;
-  transition:transform .2s ease, box-shadow .2s ease;
-  box-shadow:0 12px 34px rgba(49,46,129,.4);
-  border:2px solid rgba(251,191,36,.55);
-  position:relative;overflow:hidden;
-  user-select:none;-webkit-user-select:none;
-  max-width:100%;
-}
-.telegram-card:active{transform:scale(.96);}
-.telegram-card:hover{
-  box-shadow:0 16px 44px rgba(49,46,129,.55);
-  border-color:var(--amber-400);
-}
-.telegram-icon{font-size:1.4em;}
-.telegram-hint{
-  display:block;margin-top:.7em;
-  font-size:clamp(.6rem,1.4vw,.82rem);
-  color:var(--muted);font-weight:600;
-  letter-spacing:.08em;
-}
-
-/* ============ POWERED BY ============ */
-.powered-by{
-  text-align:center;
-  padding-top:1.4em;
-  margin-top:1em;
-  border-top:2px dashed var(--border);
-}
-.powered-by-label{
-  display:block;
-  font-size:clamp(.58rem,1.3vw,.72rem);
-  letter-spacing:.28em;
-  text-transform:uppercase;
-  color:var(--muted);
-  font-weight:700;
-  margin-bottom:.5em;
-}
-.powered-by-badge{
-  display:inline-flex;align-items:center;gap:8px;
-  background:linear-gradient(135deg,#fef3c7,#fde68a);
-  color:#78350f;
-  padding:.55em 1.2em;
-  border-radius:999px;
-  font-weight:800;
-  font-size:clamp(.72rem,1.7vw,1rem);
-  letter-spacing:.05em;
-  border:1.5px solid var(--amber-400);
-  cursor:pointer;
-  transition:transform .2s ease, box-shadow .2s ease;
-  box-shadow:0 6px 18px rgba(245,158,11,.25);
-  user-select:none;-webkit-user-select:none;
-}
-.powered-by-badge:active{transform:scale(.95);}
-.powered-by-badge:hover{
-  box-shadow:0 10px 26px rgba(245,158,11,.4);
-}
-
-/* ============ TOAST ============ */
-.toast{
-  position:fixed;bottom:30px;left:50%;
-  transform:translateX(-50%) translateY(80px);
-  background:linear-gradient(135deg,var(--indigo-800),var(--violet-600));
-  color:#fff;padding:14px 28px;
-  border-radius:999px;font-weight:700;
-  font-size:clamp(.75rem,1.8vw,1rem);
-  box-shadow:0 14px 44px rgba(0,0,0,.45);
-  opacity:0;
-  transition:all .35s cubic-bezier(.2,.8,.25,1);
-  z-index:99999;pointer-events:none;
-  border:1px solid rgba(251,191,36,.5);
-  white-space:nowrap;max-width:90vw;
-  text-align:center;
-}
-.toast.show{
-  transform:translateX(-50%) translateY(0);
-  opacity:1;
-}
-
-/* ============ MOBILE CARD LAYOUT ============ */
-@media (max-width:760px){
-  .table-wrap{overflow:visible;border-radius:0;}
-  table{min-width:0;font-size:.86rem;}
-  table,thead,tbody,tr,td{display:block;width:100%;}
-  thead{display:none;}
-  tbody tr{
-    border:1px solid var(--border);
-    border-radius:14px;
-    margin-bottom:14px;
-    overflow:hidden;
-    background:#fff !important;
-    box-shadow:0 4px 16px rgba(30,27,75,.08);
-  }
-  tbody tr:hover{background:#fff;}
-  tbody td{
-    border:none;
-    border-bottom:1px dashed #ede9fe;
-    padding:10px 14px;
-    display:flex;
-    justify-content:space-between;
-    align-items:flex-start;
-    gap:12px;
-    text-align:right;
-  }
-  tbody td::before{
-    content:attr(data-label);
-    flex:0 0 42%;
-    text-align:left;
-    font-weight:800;
-    font-size:.76em;
-    letter-spacing:.05em;
-    text-transform:uppercase;
-    color:var(--indigo-800);
-    opacity:.75;
-    line-height:1.5;
-  }
-  tbody td:last-child{border-bottom:none;}
-  td.movie-no{
-    display:block;text-align:left;
-    background:linear-gradient(135deg,var(--indigo-800),var(--violet-600));
-    color:#fff;
-    font-size:1rem;letter-spacing:.09em;
-    padding:12px 14px;text-transform:uppercase;
-    border-bottom:none;
-  }
-  td.movie-no::before{display:none;}
-  td[data-label="India Dub Name"]{
-    background:#faf5ff;font-weight:800;
-    color:var(--indigo-900);
-    display:block;text-align:left;
-    font-size:.95rem;
-    border-bottom:1px solid #ede9fe;
-  }
-  td[data-label="India Dub Name"]::before{display:none;}
-}
-
-/* ============ PRINT ============ */
-@media print{
-  body{padding:0;background:#fff;}
-  .bg-layer,.orb,.bg-grid,.intro,.powered-by,.telegram-section,.toast{display:none !important;}
-  .container{box-shadow:none;padding:8px;max-width:100%;animation:none;}
-  table{font-size:8.5px;min-width:0;}
-  th,td{padding:3px 5px;}
-  .section-divider{margin:10px 0;}
-  tbody tr{break-inside:avoid;}
-}
-
-/* ============ REDUCED MOTION ============ */
-@media (prefers-reduced-motion:reduce){
-  *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition:none !important;}
-  .intro{display:none;}
-}
-</style>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Dorutochan — Cartoon & Anime Streaming Hub</title>
+<meta name="description" content="Dorutochan — Latest Cartoons, Anime, Movies. Netflix-style hub.">
+<link rel="icon" href="assets/favicon.png">
+<link rel="stylesheet" href="style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=Bebas+Neue&display=swap" rel="stylesheet">
 </head>
 <body>
 
-<!-- ===== BACKGROUND ===== -->
-<div class="bg-layer"></div>
-<div class="orb a"></div>
-<div class="orb b"></div>
-<div class="orb c"></div>
-<div class="bg-grid"></div>
+<!-- ═══════════════════════════════════════════
+     HEADER  ·  TOP LOGO PLACEHOLDER
+     ═══════════════════════════════════════════ -->
+<header class="header" id="header">
+  <div class="header-inner">
+    <a href="#" class="brand">
+      <!-- 🔴 APNI LOGO YAHAN DAALO (top) -->
+      <img src="assets/logo.png" alt="Dorutochan" class="brand-logo">
+    </a>
 
-<!-- ===== INTRO ===== -->
-<div class="intro" id="intro">
-  <div class="intro-inner">
-    <div class="intro-badge">Shinchan Movies</div>
-    <h1 class="intro-title">TANVEER <span>EDITZ</span></h1>
-    <div class="intro-line"></div>
-    <p class="intro-sub">Complete Dubbed Movies Archive</p>
+    <nav class="nav">
+      <a href="#trending">Trending</a>
+      <a href="#anime">Anime</a>
+      <a href="#cartoon">Cartoon</a>
+      <a href="#news">News</a>
+      <a href="#request">Request</a>
+    </nav>
+
+    <div class="header-right">
+      <div class="search-box">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        <input type="text" id="search" placeholder="Search anime, cartoon...">
+      </div>
+      <a href="https://t.me/Dorutochan" target="_blank" class="btn-join">Join Channel</a>
+      <button class="menu-btn" id="menuBtn">☰</button>
+    </div>
+  </div>
+</header>
+
+<!-- ═══════════════════════════════════════════
+     HERO BANNER
+     ═══════════════════════════════════════════ -->
+<section class="hero">
+  <div class="hero-bg">
+    <!-- 🔴 APNI HERO BANNER IMAGE YAHAN DAALO -->
+    <img src="assets/hero-banner.jpg" alt="">
+  </div>
+  <div class="hero-gradient"></div>
+  <div class="hero-content">
+    <!-- 🔴 HERO LOGO (bada logo) YAHAN DAALO -->
+    <img src="assets/logo-large.png" alt="Dorutochan" class="hero-logo">
+    <h1 class="hero-title">Cartoons & Anime Ka Ghar</h1>
+    <p class="hero-desc">Naruto, Doraemon, Shinchan, One Piece — har din naya content. Sabse pehle Telegram pe.</p>
+    <div class="hero-actions">
+      <a href="https://t.me/Dorutochan" target="_blank" class="btn-primary">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+        Watch Now
+      </a>
+      <a href="#request" class="btn-secondary">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+        Request Karo
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     CAROUSEL ROWS (Netflix style)
+     ═══════════════════════════════════════════ -->
+<main class="main">
+
+  <section class="row" id="trending">
+    <div class="row-head">
+      <h2>🔥 Trending Now</h2>
+      <div class="row-nav">
+        <button onclick="scrollRow('trendingRow',-1)">‹</button>
+        <button onclick="scrollRow('trendingRow',1)">›</button>
+      </div>
+    </div>
+    <div class="row-scroll" id="trendingRow"></div>
+  </section>
+
+  <section class="row" id="anime">
+    <div class="row-head">
+      <h2>⚔️ Anime</h2>
+      <div class="row-nav">
+        <button onclick="scrollRow('animeRow',-1)">‹</button>
+        <button onclick="scrollRow('animeRow',1)">›</button>
+      </div>
+    </div>
+    <div class="row-scroll" id="animeRow"></div>
+  </section>
+
+  <section class="row" id="cartoon">
+    <div class="row-head">
+      <h2>🎨 Cartoons</h2>
+      <div class="row-nav">
+        <button onclick="scrollRow('cartoonRow',-1)">‹</button>
+        <button onclick="scrollRow('cartoonRow',1)">›</button>
+      </div>
+    </div>
+    <div class="row-scroll" id="cartoonRow"></div>
+  </section>
+
+  <section class="row" id="new">
+    <div class="row-head">
+      <h2>✨ New Releases</h2>
+      <div class="row-nav">
+        <button onclick="scrollRow('newRow',-1)">‹</button>
+        <button onclick="scrollRow('newRow',1)">›</button>
+      </div>
+    </div>
+    <div class="row-scroll" id="newRow"></div>
+  </section>
+
+</main>
+
+<!-- ═══════════════════════════════════════════
+     REQUEST SECTION  ·  MIDDLE LOGO PLACEHOLDER
+     ═══════════════════════════════════════════ -->
+<section class="request-section" id="request">
+  <div class="request-inner">
+    <!-- 🔴 APNI LOGO YAHAN DAALO (middle) -->
+    <img src="assets/logo.png" alt="Dorutochan" class="middle-logo">
+
+    <h2 class="request-title">Kya Chahiye Aapko?</h2>
+    <p class="request-sub">Anime, cartoon ya movie — jo bhi chahiye, hum laayenge. Neeche request bhejo!</p>
+
+    <form class="request-form" id="requestForm">
+      <div class="form-row">
+        <div class="form-group">
+          <label>Naam (optional)</label>
+          <input type="text" name="name" placeholder="Aapka naam">
+        </div>
+        <div class="form-group">
+          <label>Email (optional — reply ke liye)</label>
+          <input type="email" name="email" placeholder="you@example.com">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Type</label>
+          <select name="type" required>
+            <option value="">Select karo...</option>
+            <option>Anime</option>
+            <option>Cartoon</option>
+            <option>Movie</option>
+            <option>Series</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Title / Naam *</label>
+          <input type="text" name="title" required placeholder="e.g. Demon Slayer Season 4">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Details (episode, language, quality etc.)</label>
+        <textarea name="description" rows="3" placeholder="Hindi dub, 1080p, Episode 5 se 10 tak..."></textarea>
+      </div>
+
+      <button type="submit" class="btn-submit" id="reqSubmit">
+        <span class="btn-text">📩 Request Bhejo</span>
+        <span class="btn-loading" style="display:none">Bhej rahe hain...</span>
+      </button>
+      <p class="form-msg" id="reqMsg"></p>
+    </form>
+
+    <div class="recent-requests">
+      <h3>📋 Recent Requests</h3>
+      <div id="recentRequests" class="req-list"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     NEWS
+     ═══════════════════════════════════════════ -->
+<section class="container" id="news">
+  <h2 class="section-title">📰 Latest News</h2>
+  <div id="newsList" class="news-list"></div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     COMMENTS (Giscus)
+     ═══════════════════════════════════════════ -->
+<section class="container" id="comments">
+  <h2 class="section-title">💬 Comments & Feedback</h2>
+  <div class="giscus"></div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     FOOTER  ·  BOTTOM LOGO PLACEHOLDER
+     ═══════════════════════════════════════════ -->
+<footer class="footer">
+  <!-- 🔴 APNI LOGO YAHAN DAALO (bottom) -->
+  <img src="assets/logo.png" alt="Dorutochan" class="footer-logo">
+  <p class="footer-tag">Cartoons & Anime — Har Din Kuch Naya</p>
+  <div class="footer-links">
+    <a href="https://t.me/Dorutochan" target="_blank">Telegram</a>
+    <a href="#request">Request</a>
+    <a href="#comments">Comments</a>
+    <a href="#news">News</a>
+  </div>
+  <p class="footer-copy">© <span id="year"></span> Dorutochan · Made with ❤️</p>
+</footer>
+
+<!-- BACK TO TOP -->
+<button class="to-top" id="toTop">↑</button>
+
+<!-- ═══════════════════════════════════════════
+     JOIN POPUP
+     ═══════════════════════════════════════════ -->
+<div class="popup-overlay" id="popup">
+  <div class="popup">
+    <button class="popup-close" id="popupClose">✕</button>
+    <div class="popup-emoji">🎉</div>
+    <h3>Dorutochan Join Karo!</h3>
+    <p>Latest cartoons, anime aur exclusive updates sabse pehle paane ke liye channel join karo.</p>
+    <a href="https://t.me/Dorutochan" target="_blank" class="btn-primary">Join Now →</a>
+    <button class="skip" id="popupSkip">Baad me</button>
   </div>
 </div>
 
-<!-- ===== MAIN ===== -->
-<div class="container">
+<script src="app.js"></script>
 
-  <!-- ===== BRAND LOGO (TOP CENTER) ===== -->
-  <!-- Apna main logo root folder mein "logo.png" naam se rakhein -->
-  <div class="brand-header">
-    <div class="logo-slot">
-      <img src="logo.png" alt="TANVEER EDITZ"
-           onerror="this.parentElement.classList.add('fallback')">
-      <span class="fallback-text">TANVEER EDITZ</span>
-    </div>
-  </div>
-
-  <!-- ========== HUNGAMA DUBBED ========== -->
-  <div class="section-head">
-    <!-- Hungama TV logo: root folder mein "hungama.png" -->
-    <div class="section-logo">
-      <img src="hungama.png" alt="Hungama TV"
-           onerror="this.parentElement.classList.add('fallback')">
-      <span class="fallback-emoji">🎬</span>
-    </div>
-    <div class="section-text">
-      <h1 class="main-title">Hungama Dubbed</h1>
-      <h2 class="sub-title">Shinchan Movies</h2>
-    </div>
-  </div>
-  <div class="title-underline"></div>
-
-  <div class="meta-bar">
-    <span>LIST BY: TANVEER EDITZ</span>
-    <span>DATE: 27 September 2026</span>
-  </div>
-  <div class="release-info">Hungama TV Release Period: June 19, 2006 – 2024</div>
-
-  <div class="table-wrap">
-    <table>
-      <thead>
-        <tr>
-          <th>S.No.</th><th>India Dub Name</th><th>Japan Original Name</th>
-          <th>India Air Date</th><th>Japan Release Date</th><th>Sony YAY Redub Status</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr data-copy="Shin Chan in Action Kamen vs Higure Rakshas">
-          <td class="movie-no" data-label="Movie">Movie 1</td>
-          <td data-label="India Dub Name">Shin Chan in Action Kamen vs Higure Rakshas</td>
-          <td data-label="Japan Original Name">Action Kamen vs Haigure Maô</td>
-          <td data-label="India Air Date">29 August 2010</td>
-          <td data-label="Japan Release Date">24 April 1993</td>
-          <td data-label="Redub Status">Redubbed by Sony YAY! (Action Kamen vs Higure Rakshas)</td>
-        </tr>
-        <tr data-copy="Shin Chan and the Treasures of the Buri Buri Kingdom">
-          <td class="movie-no" data-label="Movie">Movie 2</td>
-          <td data-label="India Dub Name">Shin Chan and the Treasures of the Buri Buri Kingdom</td>
-          <td data-label="Japan Original Name">Buriburi Ôkoku no Hihô</td>
-          <td data-label="India Air Date">17 October 2010</td>
-          <td data-label="Japan Release Date">23 April 1994</td>
-          <td data-label="Redub Status">Redubbed by Sony YAY! (The Secrets of the Buri Buri Kingdom)</td>
-        </tr>
-        <tr data-copy="Shin Chan Movie: Adventures in Henderland">
-          <td class="movie-no" data-label="Movie">Movie 4</td>
-          <td data-label="India Dub Name">Shin Chan Movie: Adventures in Henderland</td>
-          <td data-label="Japan Original Name">Hendârando no Daibôken</td>
-          <td data-label="India Air Date">18 December 2011</td>
-          <td data-label="Japan Release Date">13 April 1996</td>
-          <td data-label="Redub Status">Redubbed by Sony YAY! (Adventures in Henderland)</td>
-        </tr>
-        <tr data-copy="Shin Chan in Dark Tama Tama Thrilling Chase">
-          <td class="movie-no" data-label="Movie">Movie 5</td>
-          <td data-label="India Dub Name">Shin Chan in Dark Tama Tama Thrilling Chase</td>
-          <td data-label="Japan Original Name">Ankoku Tamatama Daitsuiseki</td>
-          <td data-label="India Air Date">15 October 2016</td>
-          <td data-label="Japan Release Date">19 April 1997</td>
-          <td data-label="Redub Status">Redubbed by Sony YAY! (Dark Tama Tama Thrilling Chase)</td>
-        </tr>
-        <tr data-copy="Shin Chan in Bungle in the Jungle">
-          <td class="movie-no" data-label="Movie">Movie 8</td>
-          <td data-label="India Dub Name">Shin Chan in Bungle in the Jungle</td>
-          <td data-label="Japan Original Name">Arashi o Yobu Janguru!</td>
-          <td data-label="India Air Date">1 April 2011</td>
-          <td data-label="Japan Release Date">22 April 2000</td>
-          <td data-label="Redub Status">Redubbed by Sony YAY! (Bungle in the Jungle)</td>
-        </tr>
-        <tr data-copy="Shin Chan Masala Story">
-          <td class="movie-no" data-label="Movie">Movie 11</td>
-          <td data-label="India Dub Name">Shin Chan Masala Story</td>
-          <td data-label="Japan Original Name">Arashi wo Yobu Eikou no Yakiniku Road</td>
-          <td data-label="India Air Date">26 July 2014</td>
-          <td data-label="Japan Release Date">19 April 2003</td>
-          <td data-label="Redub Status">Redubbed by Sony YAY! (Masala Story (Yummy in Tummy))</td>
-        </tr>
-        <tr data-copy="Shin Chan Movie: The Golden Sword">
-          <td class="movie-no" data-label="Movie">Movie 16</td>
-          <td data-label="India Dub Name">Shin Chan Movie: The Golden Sword</td>
-          <td data-label="Japan Original Name">Chô Arashi wo Yobu Kinpoko no Yûsha</td>
-          <td data-label="India Air Date">26 October 2013</td>
-          <td data-label="Japan Release Date">19 April 2008</td>
-          <td data-label="Redub Status">Non</td>
-        </tr>
-        <tr data-copy="Shin Chan The Movie Villain aur Dulhan">
-          <td class="movie-no" data-label="Movie">Movie 18</td>
-          <td data-label="India Dub Name">Shin Chan The Movie Villain aur Dulhan</td>
-          <td data-label="Japan Original Name">Chôshikû! Arashi wo Yobu Ora no Hanayome</td>
-          <td data-label="India Air Date">28 September 2013</td>
-          <td data-label="Japan Release Date">17 April 2010</td>
-          <td data-label="Redub Status">Redubbed by Sony YAY! (Villain aur Dulhan)</td>
-        </tr>
-        <tr data-copy="Shin Chan Movie The Spy">
-          <td class="movie-no" data-label="Movie">Movie 19</td>
-          <td data-label="India Dub Name">Shin Chan Movie The Spy</td>
-          <td data-label="Japan Original Name">Arashi o Yobu! Ougon no Supai Daisakusen</td>
-          <td data-label="India Air Date">21 June 2014</td>
-          <td data-label="Japan Release Date">16 April 2011</td>
-          <td data-label="Redub Status">Redubbed by Sony YAY! (The Spy)</td>
-        </tr>
-        <tr data-copy="Shin Chan The Movie Himawari Banegi Rajkumari">
-          <td class="movie-no" data-label="Movie">Movie 20</td>
-          <td data-label="India Dub Name">Shin Chan The Movie Himawari Banegi Rajkumari</td>
-          <td data-label="Japan Original Name">Arashi o Yobu! Ora to Uchuu to Purinsesu</td>
-          <td data-label="India Air Date">22 March 2014</td>
-          <td data-label="Japan Release Date">14 April 2012</td>
-          <td data-label="Redub Status">Non</td>
-        </tr>
-        <tr data-copy="Shin Chan in Very Very Tasty Tasty">
-          <td class="movie-no" data-label="Movie">Movie 21</td>
-          <td data-label="India Dub Name">Shin Chan in Very Very Tasty Tasty</td>
-          <td data-label="Japan Original Name">Bakauma! B-kyu Gurume Sabaibaru!!</td>
-          <td data-label="India Air Date">19 July 2014</td>
-          <td data-label="Japan Release Date">20 April 2013</td>
-          <td data-label="Redub Status">Redubbed by Sony YAY! (Food for Survival!!)</td>
-        </tr>
-        <tr data-copy="Shin Chan Movie: Robot Dad">
-          <td class="movie-no" data-label="Movie">Movie 22</td>
-          <td data-label="India Dub Name">Shin Chan Movie: Robot Dad</td>
-          <td data-label="Japan Original Name">Gachinko! Gyakushu no Robo To-chan</td>
-          <td data-label="India Air Date">13 March 2015</td>
-          <td data-label="Japan Release Date">19 April 2014</td>
-          <td data-label="Redub Status">Redubbed by Sony YAY! (Robot Dad)</td>
-        </tr>
-        <tr data-copy="Shin Chan Movie: Kaanta Lagaa">
-          <td class="movie-no" data-label="Movie">Movie 23</td>
-          <td data-label="India Dub Name">Shin Chan Movie: Kaanta Lagaa</td>
-          <td data-label="Japan Original Name">Ora no Hikkoshi Monogatari: Saboten Daisuugeki</td>
-          <td data-label="India Air Date">10 February 2017</td>
-          <td data-label="Japan Release Date">18 April 2015</td>
-          <td data-label="Redub Status">Redubbed by Sony YAY! (Kaanta Lagaa (Cactus Attack!))</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <hr class="section-divider">
-
-  <!-- ========== SONY YAY DUBBED ========== -->
-  <div class="section-head">
-    <!-- Sony YAY logo: root folder mein "sony-yay.png" -->
-    <div class="section-logo">
-      <img src="sony-yay.png" alt="Sony YAY"
-           onerror="this.parentElement.classList.add('fallback')">
-      <span class="fallback-emoji">📺</span>
-    </div>
-    <div class="section-text">
-      <h1 class="main-title">Sony YAY Dubbed</h1>
-      <h2 class="sub-title">Shinchan Movies</h2>
-    </div>
-  </div>
-  <div class="title-underline"></div>
-
-  <div class="meta-bar">
-    <span>LIST BY: TANVEER EDITZ</span>
-    <span>DATE: 27 September 2026</span>
-  </div>
-  <div class="release-info">Sony YAY! Release Period: May 20, 2024 – Present</div>
-
-  <div class="table-wrap">
-    <table>
-      <thead>
-        <tr>
-          <th>S.No.</th><th>India Dub Name</th><th>Japan Original Name</th>
-          <th>India Air Date (Sony YAY!)</th><th>Japan Release Date</th><th>Dual Dub Status</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr data-copy="Shin chan Movie: Action Kamen vs Higure Rakshas"><td class="movie-no" data-label="Movie">Movie 1</td><td data-label="India Dub Name">Shin chan Movie: Action Kamen vs Higure Rakshas</td><td data-label="Japan Original Name">Action Kamen vs Haigure Maô</td><td data-label="India Air Date">25 May 2024</td><td data-label="Japan Release Date">24 July 1993</td><td data-label="Dub Status">Dual Dub</td></tr>
-        <tr data-copy="Shin chan Movie: The Secrets of the Buri Buri Kingdom"><td class="movie-no" data-label="Movie">Movie 2</td><td data-label="India Dub Name">Shin chan Movie: The Secrets of the Buri Buri Kingdom</td><td data-label="Japan Original Name">Buriburi Ôkoku no Hihô</td><td data-label="India Air Date">26 May 2024</td><td data-label="Japan Release Date">23 April 1994</td><td data-label="Dub Status">Dual Dub</td></tr>
-        <tr data-copy="Shin chan Movie: Mr. Smelly's Ambition"><td class="movie-no" data-label="Movie">Movie 3</td><td data-label="India Dub Name">Shin chan Movie: Mr. Smelly's Ambition</td><td data-label="Japan Original Name">Unkokusai no Yabou</td><td data-label="India Air Date">1 June 2024</td><td data-label="Japan Release Date">15 April 1995</td><td data-label="Dub Status">Non (Sony YAY Exclusive)</td></tr>
-        <tr data-copy="Shin chan Movie: Adventures in Henderland"><td class="movie-no" data-label="Movie">Movie 4</td><td data-label="India Dub Name">Shin chan Movie: Adventures in Henderland</td><td data-label="Japan Original Name">Hendârando no Daibôken</td><td data-label="India Air Date">8 June 2024</td><td data-label="Japan Release Date">13 April 1996</td><td data-label="Dub Status">Dual Dub</td></tr>
-        <tr data-copy="Shin chan Movie: Dark Tama Tama Thrilling Chase"><td class="movie-no" data-label="Movie">Movie 5</td><td data-label="India Dub Name">Shin chan Movie: Dark Tama Tama Thrilling Chase</td><td data-label="Japan Original Name">Ankoku Tamatama Daitsuiseki</td><td data-label="India Air Date">9 June 2024</td><td data-label="Japan Release Date">19 April 1997</td><td data-label="Dub Status">Dual Dub</td></tr>
-        <tr data-copy="Shin chan Movie: Mission Pig's Hoof"><td class="movie-no" data-label="Movie">Movie 6</td><td data-label="India Dub Name">Shin chan Movie: Mission Pig's Hoof</td><td data-label="Japan Original Name">Dengeki! Buta no Hizume Daisakusen</td><td data-label="India Air Date">15 June 2024</td><td data-label="Japan Release Date">18 April 1998</td><td data-label="Dub Status">Non (Sony YAY Exclusive)</td></tr>
-        <tr data-copy="Shin chan Movie: Burst! Hot Spring Battle"><td class="movie-no" data-label="Movie">Movie 7</td><td data-label="India Dub Name">Shin chan Movie: Burst! Hot Spring Battle</td><td data-label="Japan Original Name">Bakuhatsu! Onsen Wakuwaku Daikessen</td><td data-label="India Air Date">23 June 2024</td><td data-label="Japan Release Date">17 April 1999</td><td data-label="Dub Status">Non (Sony YAY Exclusive)</td></tr>
-        <tr data-copy="Shin chan Movie: Bungle in the Jungle"><td class="movie-no" data-label="Movie">Movie 8</td><td data-label="India Dub Name">Shin chan Movie: Bungle in the Jungle</td><td data-label="Japan Original Name">Arashi o Yobu Janguru!</td><td data-label="India Air Date">16 June 2024</td><td data-label="Japan Release Date">22 April 2000</td><td data-label="Dub Status">Dual Dub</td></tr>
-        <tr data-copy="Shin chan Movie: The Adult Empire Strikes Back"><td class="movie-no" data-label="Movie">Movie 9</td><td data-label="India Dub Name">Shin chan Movie: The Adult Empire Strikes Back</td><td data-label="Japan Original Name">Arashi o Yobu: Môretsu! Otona Teikoku no Gyakushû</td><td data-label="India Air Date">30 June 2024</td><td data-label="Japan Release Date">21 April 2001</td><td data-label="Dub Status">Non (Sony YAY Exclusive)</td></tr>
-        <tr data-copy="Shin chan Movie: The Battle of the Warring States"><td class="movie-no" data-label="Movie">Movie 10</td><td data-label="India Dub Name">Shin chan Movie: The Battle of the Warring States</td><td data-label="Japan Original Name">Arashi o Yobu: Appare! Sengoku Daikassen</td><td data-label="India Air Date">7 July 2024</td><td data-label="Japan Release Date">20 April 2002</td><td data-label="Dub Status">Non (Sony YAY Exclusive)</td></tr>
-        <tr data-copy="Shin chan Movie: Masala Story (Yummy in Tummy)"><td class="movie-no" data-label="Movie">Movie 11</td><td data-label="India Dub Name">Shin chan Movie: Masala Story (Yummy in Tummy)</td><td data-label="Japan Original Name">Arashi wo Yobu Eikou no Yakiniku Road</td><td data-label="India Air Date">22 June 2024</td><td data-label="Japan Release Date">19 April 2003</td><td data-label="Dub Status">Dual Dub</td></tr>
-        <tr data-copy="Shin chan Movie: Kasukabe Boys of the Evening Sun"><td class="movie-no" data-label="Movie">Movie 12</td><td data-label="India Dub Name">Shin chan Movie: Kasukabe Boys of the Evening Sun</td><td data-label="Japan Original Name">Arashi wo Yobu! Yûhi no Kasukabe Bôizu</td><td data-label="India Air Date">14 July 2024</td><td data-label="Japan Release Date">17 April 2004</td><td data-label="Dub Status">Non (Sony YAY Exclusive)</td></tr>
-        <tr data-copy="Shin chan Movie: 3 Minutes Me Duniya Tabahi"><td class="movie-no" data-label="Movie">Movie 13</td><td data-label="India Dub Name">Shin chan Movie: 3 Minutes Me Duniya Tabahi</td><td data-label="Japan Original Name">Densetsu o Yobu Buriburi: Sanpun Bokkiri Daishingeki</td><td data-label="India Air Date">21 July 2024</td><td data-label="Japan Release Date">16 April 2005</td><td data-label="Dub Status">Non (Sony YAY Exclusive)</td></tr>
-        <tr data-copy="Shin chan Movie: Dance! Amigo!"><td class="movie-no" data-label="Movie">Movie 14</td><td data-label="India Dub Name">Shin chan Movie: Dance! Amigo!</td><td data-label="Japan Original Name">Densetsu wo Yobu Odore! Amîgo!</td><td data-label="India Air Date">28 July 2024</td><td data-label="Japan Release Date">15 April 2006</td><td data-label="Dub Status">Non (Sony YAY Exclusive)</td></tr>
-        <tr data-copy="Shin chan Movie: Shiro ka Dhamaka (The Singing Bomb!)"><td class="movie-no" data-label="Movie">Movie 15</td><td data-label="India Dub Name">Shin chan Movie: Shiro ka Dhamaka (The Singing Bomb!)</td><td data-label="Japan Original Name">Arashi o Yobu: Utau Ketsudake Bakudan!</td><td data-label="India Air Date">4 August 2024</td><td data-label="Japan Release Date">21 April 2007</td><td data-label="Dub Status">Non (Sony YAY Exclusive)</td></tr>
-        <tr data-copy="Shin chan Movie: Kasukabe Wild Kingdom"><td class="movie-no" data-label="Movie">Movie 17</td><td data-label="India Dub Name">Shin chan Movie: Kasukabe Wild Kingdom</td><td data-label="Japan Original Name">Otakebi! Kasukabe Yashiô Ôkoku</td><td data-label="India Air Date">11 August 2024</td><td data-label="Japan Release Date">18 April 2009</td><td data-label="Dub Status">Non (Sony YAY Exclusive)</td></tr>
-        <tr data-copy="Shin chan Movie: Villain aur Dulhan"><td class="movie-no" data-label="Movie">Movie 18</td><td data-label="India Dub Name">Shin chan Movie: Villain aur Dulhan</td><td data-label="Japan Original Name">Chôshikû! Arashi wo Yobu Ora no Hanayome</td><td data-label="India Air Date">6 July 2024</td><td data-label="Japan Release Date">17 April 2010</td><td data-label="Dub Status">Dual Dub</td></tr>
-        <tr data-copy="Shin chan Movie: The Spy"><td class="movie-no" data-label="Movie">Movie 19</td><td data-label="India Dub Name">Shin chan Movie: The Spy</td><td data-label="Japan Original Name">Arashi o Yobu! Ougon no Supai Daisakusen</td><td data-label="India Air Date">7 July 2024</td><td data-label="Japan Release Date">16 April 2011</td><td data-label="Dub Status">Dual Dub</td></tr>
-        <tr data-copy="Shin chan Movie: Food for Survival!!"><td class="movie-no" data-label="Movie">Movie 21</td><td data-label="India Dub Name">Shin chan Movie: Food for Survival!!</td><td data-label="Japan Original Name">Bakauma! B-kyu Gurume Sabaibaru!!</td><td data-label="India Air Date">14 July 2024</td><td data-label="Japan Release Date">20 April 2013</td><td data-label="Dub Status">Dual Dub</td></tr>
-        <tr data-copy="Shin chan Movie: Robot Dad"><td class="movie-no" data-label="Movie">Movie 22</td><td data-label="India Dub Name">Shin chan Movie: Robot Dad</td><td data-label="Japan Original Name">Gachinko! Gyakushu no Robo To-chan</td><td data-label="India Air Date">20 July 2024</td><td data-label="Japan Release Date">19 April 2014</td><td data-label="Dub Status">Dual Dub</td></tr>
-        <tr data-copy="Shin chan Movie: Kaanta Lagaa (Cactus Attack!)"><td class="movie-no" data-label="Movie">Movie 23</td><td data-label="India Dub Name">Shin chan Movie: Kaanta Lagaa (Cactus Attack!)</td><td data-label="Japan Original Name">Ora no Hikkoshi Monogatari: Saboten Daisuugeki</td><td data-label="India Air Date">21 July 2024</td><td data-label="Japan Release Date">18 April 2015</td><td data-label="Dub Status">Dual Dub</td></tr>
-        <tr data-copy="Shin chan Movie: In the Dreaming World"><td class="movie-no" data-label="Movie">Movie 24</td><td data-label="India Dub Name">Shin chan Movie: In the Dreaming World</td><td data-label="Japan Original Name">Bakusui! Yumemi Wârudo Daitotsugeki</td><td data-label="India Air Date">25 August 2024</td><td data-label="Japan Release Date">16 April 2016</td><td data-label="Dub Status">Non (Sony YAY Exclusive)</td></tr>
-        <tr data-copy="Shin chan Movie: Invasion!! Alien Shiriri"><td class="movie-no" data-label="Movie">Movie 25</td><td data-label="India Dub Name">Shin chan Movie: Invasion!! Alien Shiriri</td><td data-label="Japan Original Name">Shûrai!! Uchûjin Shiriri</td><td data-label="India Air Date">1 September 2024</td><td data-label="Japan Release Date">15 April 2017</td><td data-label="Dub Status">Non (Sony YAY Exclusive)</td></tr>
-        <tr data-copy="Shin chan Movie: Kung Fu Boys ~Ramen Rebellion~"><td class="movie-no" data-label="Movie">Movie 26</td><td data-label="India Dub Name">Shin chan Movie: Kung Fu Boys ~Ramen Rebellion~</td><td data-label="Japan Original Name">Bakumori! Kanfû Bôizu ~Râmen Tairan~</td><td data-label="India Air Date">8 September 2024</td><td data-label="Japan Release Date">13 April 2018</td><td data-label="Dub Status">Non (Sony YAY Exclusive)</td></tr>
-        <tr data-copy="Shin chan Movie: Dangerous Family Holiday"><td class="movie-no" data-label="Movie">Movie 27</td><td data-label="India Dub Name">Shin chan Movie: Dangerous Family Holiday</td><td data-label="Japan Original Name">Shinkon Ryokô Harikên ~Ushinawareta Hiroshi~</td><td data-label="India Air Date">15 September 2024</td><td data-label="Japan Release Date">19 April 2019</td><td data-label="Dub Status">Non (Sony YAY Exclusive)</td></tr>
-        <tr data-copy="Shin chan Movie: Crash! Rakuga Kingdom"><td class="movie-no" data-label="Movie">Movie 28</td><td data-label="India Dub Name">Shin chan Movie: Crash! Rakuga Kingdom</td><td data-label="Japan Original Name">Gekitotsu! Rakugakingudamu to Hobo Yonin no Yûsha</td><td data-label="India Air Date">22 September 2024</td><td data-label="Japan Release Date">11 September 2020</td><td data-label="Dub Status">Non (Sony YAY Exclusive)</td></tr>
-        <tr data-copy="Shin chan Movie: The Mystery of Tenkasu Academy"><td class="movie-no" data-label="Movie">Movie 29</td><td data-label="India Dub Name">Shin chan Movie: The Mystery of Tenkasu Academy</td><td data-label="Japan Original Name">Nazo Meki! Hana no Tenkasu Gakuen</td><td data-label="India Air Date">13 October 2024</td><td data-label="Japan Release Date">30 July 2021</td><td data-label="Dub Status">Non (Sony YAY Exclusive)</td></tr>
-        <tr data-copy="Shin chan Movie: The Legends of Ninja Mononoke"><td class="movie-no" data-label="Movie">Movie 30</td><td data-label="India Dub Name">Shin chan Movie: The Legends of Ninja Mononoke</td><td data-label="Japan Original Name">Mononoke Ninja Chinpûden</td><td data-label="India Air Date">27 October 2024</td><td data-label="Japan Release Date">22 April 2022</td><td data-label="Dub Status">Non (Sony YAY Exclusive)</td></tr>
-        <tr data-copy="New Dimension! Shin chan Movie: Battle of Supernatural Powers"><td class="movie-no" data-label="Movie">Movie 31</td><td data-label="India Dub Name">New Dimension! Shin chan Movie: Battle of Supernatural Powers</td><td data-label="Japan Original Name">Shin Jigen! Kureyon Shin-chan za Mûbî Chônôryoku Daikessen</td><td data-label="India Air Date">10 November 2024</td><td data-label="Japan Release Date">4 August 2023</td><td data-label="Dub Status">Non (Sony YAY Exclusive)</td></tr>
-        <tr data-copy="Shin chan Movie: Our Dinosaur Diary"><td class="movie-no" data-label="Movie">Movie 32</td><td data-label="India Dub Name">Shin chan Movie: Our Dinosaur Diary</td><td data-label="Japan Original Name">Ora-tachi no Kyôryû Nikki</td><td data-label="India Air Date">Coming Soon (Mid 2026)</td><td data-label="Japan Release Date">9 August 2024</td><td data-label="Dub Status">Non (Sony YAY Exclusive)</td></tr>
-        <tr data-copy="Shin chan Movie: The Spicy Kasukabe Dancers"><td class="movie-no" data-label="Movie">Movie 33</td><td data-label="India Dub Name">Shin chan Movie: The Spicy Kasukabe Dancers</td><td data-label="Japan Original Name">Chô Karê! Shakunetsu no Kasukabe Dansāzu</td><td data-label="India Air Date">Upcoming (Late 2026)</td><td data-label="Japan Release Date">8 August 2025</td><td data-label="Dub Status">Non (Sony YAY Exclusive)</td></tr>
-      </tbody>
-    </table>
-  </div>
-
-  <div class="upcoming-box">
-    <div class="upcoming-title">Upcoming Movie / Next Announcement</div>
-    <div>Crayon Shinchan the Movie: Spooky! My Yokai Vacation</div>
-  </div>
-
-  <div class="credit-notice">
-    CRITICAL CREDIT NOTICE: Created and Curated by TANVEER EDITZ. If this list/document/website is forwarded or shared anywhere, full credit must remain to TANVEER EDITZ.
-  </div>
-
-  <!-- ===== TELEGRAM ===== -->
-  <div class="telegram-section">
-    <div class="telegram-card" id="telegramBtn" data-copy="@SONY_YAY_0000">
-      <span class="telegram-icon">📲</span>
-      <span>@SONY_YAY_0000</span>
-      <span style="font-size:.75em;opacity:.85;">Tap to Copy</span>
-    </div>
-    <span class="telegram-hint">👆 Tap on any movie row to copy its name</span>
-  </div>
-
-  <!-- ===== POWERED BY ===== -->
-  <div class="powered-by">
-    <span class="powered-by-label">Powered by</span>
-    <span class="powered-by-badge" data-copy="@DorutochanCollections">
-      ⚡ @DorutochanCollections
-    </span>
-  </div>
-
-</div>
-
-<!-- ===== TOAST ===== -->
-<div class="toast" id="toast">Copied!</div>
-
-<script>
-(function(){
-  'use strict';
-
-  /* ---------- COPY ---------- */
-  function copyText(text) {
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      return navigator.clipboard.writeText(text);
-    }
-    return new Promise(function(resolve, reject) {
-      try {
-        var ta = document.createElement('textarea');
-        ta.value = text;
-        ta.style.position = 'fixed';
-        ta.style.opacity = '0';
-        document.body.appendChild(ta);
-        ta.select();
-        document.execCommand('copy');
-        document.body.removeChild(ta);
-        resolve();
-      } catch (e) { reject(e); }
-    });
-  }
-
-  /* ---------- TOAST ---------- */
-  var toast = document.getElementById('toast');
-  var toastTimer = null;
-  function showToast(msg) {
-    toast.textContent = msg || 'Copied!';
-    toast.classList.add('show');
-    clearTimeout(toastTimer);
-    toastTimer = setTimeout(function(){
-      toast.classList.remove('show');
-    }, 1800);
-  }
-
-  /* ---------- RIPPLE ---------- */
-  function createRipple(e, el) {
-    var rect = el.getBoundingClientRect();
-    var size = Math.max(rect.width, rect.height);
-    var clientX = e.clientX || (e.touches && e.touches[0] && e.touches[0].clientX) || (rect.left + rect.width/2);
-    var clientY = e.clientY || (e.touches && e.touches[0] && e.touches[0].clientY) || (rect.top + rect.height/2);
-    var x = clientX - rect.left - size/2;
-    var y = clientY - rect.top - size/2;
-    var ripple = document.createElement('span');
-    ripple.className = 'ripple';
-    ripple.style.width = ripple.style.height = size + 'px';
-    ripple.style.left = x + 'px';
-    ripple.style.top = y + 'px';
-    el.appendChild(ripple);
-    setTimeout(function(){ ripple.remove(); }, 600);
-  }
-
-  /* ---------- TABLE ROWS TAP TO COPY ---------- */
-  document.querySelectorAll('tbody tr[data-copy]').forEach(function(row){
-    row.addEventListener('click', function(e){
-      createRipple(e, row);
-      var text = row.getAttribute('data-copy');
-      if (!text) return;
-      copyText(text).then(function(){
-        showToast('📋 Copied: ' + text);
-      }).catch(function(){
-        showToast('❌ Copy failed');
-      });
-    });
-  });
-
-  /* ---------- TELEGRAM ---------- */
-  var tgBtn = document.getElementById('telegramBtn');
-  if (tgBtn) {
-    tgBtn.addEventListener('click', function(e){
-      createRipple(e, tgBtn);
-      var text = tgBtn.getAttribute('data-copy') || '@SONY_YAY_0000';
-      copyText(text).then(function(){
-        showToast('📲 Telegram Copied: ' + text);
-      }).catch(function(){
-        showToast('❌ Copy failed');
-      });
-    });
-  }
-
-  /* ---------- POWERED BY BADGE ---------- */
-  var pbBadge = document.querySelector('.powered-by-badge');
-  if (pbBadge) {
-    pbBadge.addEventListener('click', function(e){
-      createRipple(e, pbBadge);
-      var text = pbBadge.getAttribute('data-copy') || '@DorutochanCollections';
-      copyText(text).then(function(){
-        showToast('⚡ Copied: ' + text);
-      }).catch(function(){
-        showToast('❌ Copy failed');
-      });
-    });
-  }
-
-  /* ---------- HIDE INTRO ---------- */
-  var intro = document.getElementById('intro');
-  if (intro) {
-    setTimeout(function(){ intro.style.display = 'none'; }, 3300);
-  }
-
-})();
+<!-- ═══════════════════════════════════════════
+     GISCUS COMMENTS
+     (giscus.app se apna config generate karke ye values bharo)
+     ═══════════════════════════════════════════ -->
+<script src="https://giscus.app/client.js"
+  data-repo="YOUR_USERNAME/YOUR_REPO"
+  data-repo-id="YOUR_REPO_ID"
+  data-category="Comments"
+  data-category-id="YOUR_CATEGORY_ID"
+  data-mapping="pathname"
+  data-strict="0"
+  data-reactions-enabled="1"
+  data-emit-metadata="0"
+  data-input-position="top"
+  data-theme="dark"
+  data-lang="en"
+  data-loading="lazy"
+  crossorigin="anonymous"
+  async>
 </script>
-
 </body>
 </html>
