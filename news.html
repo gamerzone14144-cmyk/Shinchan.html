@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>News — Dorutochan</title>
+<link rel="icon" href="assets/favicon.png">
+<link rel="stylesheet" href="style.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=Bebas+Neue&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <a href="index.html" class="brand"><img src="assets/logo.png" alt="Dorutochan" class="brand-logo"></a>
+    <nav class="nav" id="navMenu">
+      <a href="index.html">Home</a>
+      <a href="anime.html">Anime</a>
+      <a href="cartoon.html">Cartoon</a>
+      <a href="news.html" class="active">News</a>
+      <a href="request.html">Request</a>
+      <a href="comments.html">Comments</a>
+    </nav>
+    <div class="header-right">
+      <a href="https://t.me/Dorutochan" target="_blank" class="btn-join">Join</a>
+      <button class="menu-btn" id="menuBtn">☰</button>
+    </div>
+  </div>
+</header>
+
+<section class="page-header">
+  <img src="assets/logo.png" alt="Dorutochan" class="middle-logo">
+  <h1 class="page-title">📰 Latest News</h1>
+  <p class="page-sub">Naye uploads, updates, aur announcements.</p>
+</section>
+
+<main class="container-narrow">
+  <div id="newsList" class="news-list"></div>
+</main>
+
+<footer class="footer">
+  <img src="assets/logo.png" alt="Dorutochan" class="footer-logo">
+  <p class="footer-tag">Cartoons & Anime — Har Din Kuch Naya</p>
+  <p class="footer-since">Since 2022–23</p>
+  <div class="footer-links">
+    <a href="https://t.me/Dorutochan" target="_blank">Telegram</a>
+    <a href="anime.html">Anime</a>
+    <a href="cartoon.html">Cartoon</a>
+    <a href="news.html">News</a>
+    <a href="request.html">Request</a>
+    <a href="comments.html">Comments</a>
+  </div>
+  <p class="footer-copy">© <span id="year"></span> Dorutochan · Made with ❤️</p>
+</footer>
+
+<button class="to-top" id="toTop">↑</button>
+<script src="app.js"></script>
+</body>
+</html>

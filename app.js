@@ -1,146 +1,91 @@
-/* ═══════════════════════════════════════════════
-   DORUTOCHAN — App Logic
-   ═══════════════════════════════════════════════ */
+/* ═══ DORUTOCHAN APP ═══ */
 
-// 🔴 APNA FORMSPREE ID YAHAN DAALO
-const FORMSPREE_ID = "YOUR_FORMSPREE_ID";  // e.g. "xpzgkqwe"
-
+const FORMSPREE_ID = "YOUR_FORMSPREE_ID";
+const TELEGRAM = "https://t.me/Dorutochan";
 let allPosts = [];
 
-// ───────── LOAD DATA ─────────
+// ─── Load JSON ───
 async function loadJSON(path) {
   try {
     const r = await fetch(path + '?v=' + Date.now());
     if (!r.ok) return null;
     return await r.json();
-  } catch (e) { console.warn(e); return null; }
+  } catch (e) { return null; }
 }
 
-// ───────── INIT ─────────
-document.addEventListener('DOMContentLoaded', async () => {
-  document.getElementById('year').textContent = new Date().getFullYear();
-
-  const [postsData, newsData, reqData] = await Promise.all([
-    loadJSON('data/posts.json'),
-    loadJSON('data/news.json'),
-    loadJSON('data/requests.json')
-  ]);
-
-  allPosts = postsData?.posts || [];
-  renderAllRows(allPosts);
-  renderNews(newsData?.news || []);
-  renderRecentRequests(reqData?.requests || []);
-
-  initHeader();
-  initSearch();
-  initPopup();
-  initToTop();
-  initRequestForm();
-  initMenu();
-});
-
-// ───────── ROWS ─────────
-function renderAllRows(posts) {
-  const trending = posts.filter(p => p.trending).slice(0, 20);
-  const anime    = posts.filter(p => p.type === 'anime').slice(0, 20);
-  const cartoon  = posts.filter(p => p.type === 'cartoon').slice(0, 20);
-  const newReleases = [...posts].sort((a,b) =>
-    new Date(b.date||0) - new Date(a.date||0)
-  ).slice(0, 20);
-
-  fillRow('trendingRow', trending.length ? trending : posts.slice(0, 12));
-  fillRow('animeRow', anime);
-  fillRow('cartoonRow', cartoon);
-  fillRow('newRow', newReleases);
+// ─── Render Poster ───
+function posterHTML(p) {
+  return `
+    <a href="${p.link || '#'}" target="${p.link ? '_blank' : '_self'}" class="poster">
+      <img src="${p.image || 'https://via.placeholder.com/300x450/16161f/7c5cff?text=D'}"
+           alt="${esc(p.title)}" loading="lazy">
+      <div class="poster-info">
+        <div class="poster-title">${esc(p.title)}</div>
+        <div class="poster-meta">${p.type || ''} ${p.tags?.length ? '· ' + p.tags[0] : ''}</div>
+      </div>
+    </a>`;
 }
 
 function fillRow(id, posts) {
   const box = document.getElementById(id);
   if (!box) return;
-  if (!posts.length) {
-    box.innerHTML = `<p style="color:#888;padding:1rem 0">Abhi koi content nahi. Admin panel se add karo.</p>`;
-    return;
-  }
-  box.innerHTML = posts.map(p => `
-    <a href="${p.link || '#'}" target="${p.link ? '_blank' : '_self'}" class="poster">
-      <img src="${p.image || 'https://via.placeholder.com/300x450/16161f/7c5cff?text=Dorutochan'}"
-           alt="${escapeHtml(p.title)}" loading="lazy">
-      <div class="poster-info">
-        <div class="poster-title">${escapeHtml(p.title)}</div>
-        <div class="poster-meta">${p.type || ''} ${p.tags?.length ? '· ' + p.tags[0] : ''}</div>
-      </div>
-    </a>
-  `).join('');
+  if (!posts.length) { box.innerHTML = '<p style="color:#888;padding:1rem 0">Koi content nahi.</p>'; return; }
+  box.innerHTML = posts.map(posterHTML).join('');
+}
+
+function fillGrid(id, posts) {
+  const box = document.getElementById(id);
+  if (!box) return;
+  if (!posts.length) { box.innerHTML = '<p style="color:#888;padding:2rem;text-align:center;grid-column:1/-1">Koi content nahi mila.</p>'; return; }
+  box.innerHTML = posts.map(posterHTML).join('');
 }
 
 function scrollRow(id, dir) {
   const el = document.getElementById(id);
-  if (!el) return;
-  el.scrollBy({ left: dir * (el.clientWidth * 0.85), behavior: 'smooth' });
+  if (el) el.scrollBy({ left: dir * (el.clientWidth * 0.85), behavior: 'smooth' });
 }
 
-// ───────── SEARCH ─────────
-function initSearch() {
-  const input = document.getElementById('search');
-  input?.addEventListener('input', (e) => {
-    const q = e.target.value.toLowerCase().trim();
-    if (!q) { renderAllRows(allPosts); return; }
-    const filtered = allPosts.filter(p =>
-      (p.title||'').toLowerCase().includes(q) ||
-      (p.tags||[]).some(t => t.toLowerCase().includes(q)) ||
-      (p.type||'').toLowerCase().includes(q)
-    );
-    fillRow('trendingRow', filtered);
-    fillRow('animeRow', filtered.filter(p => p.type === 'anime'));
-    fillRow('cartoonRow', filtered.filter(p => p.type === 'cartoon'));
-    fillRow('newRow', filtered);
-  });
-}
-
-// ───────── NEWS ─────────
-function renderNews(news) {
-  const box = document.getElementById('newsList');
-  if (!news.length) { box.innerHTML = '<p style="color:#888">Abhi koi news nahi.</p>'; return; }
-  box.innerHTML = news.map(n => `
+// ─── News ───
+function renderNews(news, boxId = 'newsList', limit = 0) {
+  const box = document.getElementById(boxId);
+  if (!box) return;
+  const items = limit ? news.slice(0, limit) : news;
+  if (!items.length) { box.innerHTML = '<p style="color:#888">Abhi koi news nahi.</p>'; return; }
+  box.innerHTML = items.map(n => `
     <div class="news-item">
-      <h4>${escapeHtml(n.title)}</h4>
+      <h4>${esc(n.title)}</h4>
       <div class="date">${n.date || ''}</div>
-      <p>${escapeHtml(n.body || '')}</p>
-    </div>
-  `).join('');
+      <p>${esc(n.body || '')}</p>
+    </div>`).join('');
 }
 
-// ───────── RECENT REQUESTS ─────────
-function renderRecentRequests(reqs) {
-  const box = document.getElementById('recentRequests');
-  if (!reqs.length) {
-    box.innerHTML = '<p style="color:#888;font-size:.9rem">Abhi koi request nahi. Pehle banne wale aap ho!</p>';
-    return;
-  }
-  box.innerHTML = reqs.slice(0, 8).map(r => `
+// ─── Requests ───
+function renderRequests(reqs, boxId = 'recentRequests') {
+  const box = document.getElementById(boxId);
+  if (!box) return;
+  if (!reqs.length) { box.innerHTML = '<p style="color:#888;font-size:.9rem">Abhi koi request nahi.</p>'; return; }
+  box.innerHTML = reqs.slice(0, 10).map(r => `
     <div class="req-item">
-      <span class="req-type">${escapeHtml(r.type || 'Other')}</span>
-      <span class="req-title">${escapeHtml(r.title)}</span>
+      <span class="req-type">${esc(r.type || 'Other')}</span>
+      <span class="req-title">${esc(r.title)}</span>
       <span class="req-date">${r.date || ''}</span>
-    </div>
-  `).join('');
+    </div>`).join('');
 }
 
-// ───────── REQUEST FORM ─────────
+// ─── Request Form ───
 function initRequestForm() {
   const form = document.getElementById('requestForm');
+  if (!form) return;
   const msg = document.getElementById('reqMsg');
   const btn = document.getElementById('reqSubmit');
-  if (!form) return;
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
     msg.textContent = ''; msg.className = 'form-msg';
-
     const btnText = btn.querySelector('.btn-text');
     const btnLoad = btn.querySelector('.btn-loading');
-    btnText.style.display = 'none';
-    btnLoad.style.display = 'inline';
+    if (btnText) btnText.style.display = 'none';
+    if (btnLoad) btnLoad.style.display = 'inline';
     btn.disabled = true;
 
     const fd = new FormData(form);
@@ -155,10 +100,8 @@ function initRequestForm() {
 
     try {
       if (!FORMSPREE_ID || FORMSPREE_ID === 'YOUR_FORMSPREE_ID') {
-        // Demo mode (Formspree ID set nahi ki)
-        await new Promise(r => setTimeout(r, 800));
-        console.log('Demo mode — request:', payload);
-        msg.textContent = '✅ Demo mode: Request mil gayi (Formspree ID set karo asli ke liye)';
+        await new Promise(r => setTimeout(r, 700));
+        msg.textContent = '✅ Demo mode — Formspree ID set karo asli ke liye';
         msg.classList.add('ok');
       } else {
         const res = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
@@ -166,94 +109,125 @@ function initRequestForm() {
           headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
           body: JSON.stringify(payload)
         });
-        if (!res.ok) throw new Error('Formspree error');
+        if (!res.ok) throw new Error();
         msg.textContent = '🎉 Request mil gayi! Hum jald hi laayenge.';
         msg.classList.add('ok');
       }
       form.reset();
-      saveMyRequest(payload);
-    } catch (err) {
-      console.error(err);
-      msg.textContent = '❌ Kuch problem hui. Telegram pe message kar do.';
+    } catch {
+      msg.textContent = '❌ Problem hui. Telegram pe message karo.';
       msg.classList.add('err');
     } finally {
-      btnText.style.display = 'inline';
-      btnLoad.style.display = 'none';
+      if (btnText) btnText.style.display = 'inline';
+      if (btnLoad) btnLoad.style.display = 'none';
       btn.disabled = false;
     }
   });
 }
 
-function saveMyRequest(payload) {
-  try {
-    const key = 'doruto_my_requests';
-    const cur = JSON.parse(localStorage.getItem(key) || '[]');
-    cur.unshift({ ...payload, date: new Date().toISOString().slice(0,10) });
-    localStorage.setItem(key, JSON.stringify(cur.slice(0, 20)));
-  } catch (e) {}
+// ─── Search ───
+function initSearch() {
+  const input = document.getElementById('search');
+  if (!input) return;
+  input.addEventListener('input', (e) => {
+    const q = e.target.value.toLowerCase().trim();
+    const filtered = !q ? allPosts : allPosts.filter(p =>
+      (p.title || '').toLowerCase().includes(q) ||
+      (p.tags || []).some(t => t.toLowerCase().includes(q)) ||
+      (p.type || '').toLowerCase().includes(q)
+    );
+    if (document.getElementById('trendingRow')) {
+      fillRow('trendingRow', filtered.filter(p => p.trending).slice(0, 20));
+    }
+    if (document.getElementById('animeGrid')) fillGrid('animeGrid', filtered.filter(p => p.type === 'anime'));
+    if (document.getElementById('cartoonGrid')) fillGrid('cartoonGrid', filtered.filter(p => p.type === 'cartoon'));
+  });
 }
 
-// ───────── HEADER SCROLL ─────────
-function initHeader() {
-  const header = document.getElementById('header');
-  const onScroll = () => {
-    if (window.scrollY > 40) header.classList.add('scrolled');
-    else header.classList.remove('scrolled');
-  };
-  window.addEventListener('scroll', onScroll, { passive: true });
-  onScroll();
-}
-
-// ───────── MOBILE MENU ─────────
+// ─── Mobile Menu ───
 function initMenu() {
   const btn = document.getElementById('menuBtn');
-  const nav = document.querySelector('.nav');
+  const nav = document.getElementById('navMenu');
   if (!btn || !nav) return;
   btn.addEventListener('click', () => {
     const open = nav.style.display === 'flex';
-    if (open) {
-      nav.style.cssText = '';
-    } else {
-      nav.style.cssText = 'display:flex;position:fixed;flex-direction:column;background:rgba(10,10,15,.98);padding:5rem 2rem 2rem;top:0;left:0;right:0;z-index:99;border-bottom:1px solid #22222e;gap:1.2rem;';
-    }
+    nav.style.cssText = open ? '' :
+      'display:flex;position:fixed;flex-direction:column;background:rgba(10,10,15,.98);padding:5rem 2rem 2rem;top:0;left:0;right:0;z-index:99;border-bottom:1px solid #22222e;gap:1.2rem;';
   });
-  nav.querySelectorAll('a').forEach(a => {
-    a.addEventListener('click', () => { btn.click(); });
-  });
+  nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => nav.style.cssText = ''));
 }
 
-// ───────── POPUP ─────────
+// ─── Popup ───
 function initPopup() {
   const popup = document.getElementById('popup');
-  const close = document.getElementById('popupClose');
-  const skip = document.getElementById('popupSkip');
-  const KEY = 'doruto_popup_seen_v2';
-
-  if (!localStorage.getItem(KEY)) {
-    setTimeout(() => popup.classList.add('show'), 8000);
-  }
-  const hide = () => {
-    popup.classList.remove('show');
-    localStorage.setItem(KEY, Date.now());
-  };
-  close?.addEventListener('click', hide);
-  skip?.addEventListener('click', hide);
-  popup?.addEventListener('click', e => { if (e.target === popup) hide(); });
+  if (!popup) return;
+  const KEY = 'doruto_popup_seen_v3';
+  if (localStorage.getItem(KEY)) return;
+  setTimeout(() => popup.classList.add('show'), 8000);
+  const hide = () => { popup.classList.remove('show'); localStorage.setItem(KEY, Date.now()); };
+  document.getElementById('popupClose')?.addEventListener('click', hide);
+  document.getElementById('popupSkip')?.addEventListener('click', hide);
+  popup.addEventListener('click', e => { if (e.target === popup) hide(); });
 }
 
-// ───────── TO TOP ─────────
+// ─── To Top ───
 function initToTop() {
   const btn = document.getElementById('toTop');
+  if (!btn) return;
   window.addEventListener('scroll', () => {
-    if (window.scrollY > 400) btn.classList.add('show');
-    else btn.classList.remove('show');
+    btn.classList.toggle('show', window.scrollY > 400);
   }, { passive: true });
   btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 }
 
-// ───────── UTIL ─────────
-function escapeHtml(s='') {
-  return String(s).replace(/[&<>"']/g, c => (
-    { '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]
-  ));
+// ─── Utility ───
+function esc(s = '') {
+  return String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 }
+
+// ─── Init ───
+document.addEventListener('DOMContentLoaded', async () => {
+  document.getElementById('year').textContent = new Date().getFullYear();
+  initMenu();
+  initPopup();
+  initToTop();
+  initRequestForm();
+  initSearch();
+
+  const page = location.pathname.split('/').pop() || 'index.html';
+
+  // HOME
+  if (page === 'index.html' || page === '') {
+    const data = await loadJSON('data/posts.json');
+    allPosts = data?.posts || [];
+    fillRow('trendingRow', allPosts.filter(p => p.trending).slice(0, 20));
+    const news = await loadJSON('data/news.json');
+    renderNews(news?.news || [], 'newsList', 3);
+  }
+
+  // ANIME
+  if (page === 'anime.html') {
+    const data = await loadJSON('data/posts.json');
+    allPosts = data?.posts || [];
+    fillGrid('animeGrid', allPosts.filter(p => p.type === 'anime'));
+  }
+
+  // CARTOON
+  if (page === 'cartoon.html') {
+    const data = await loadJSON('data/posts.json');
+    allPosts = data?.posts || [];
+    fillGrid('cartoonGrid', allPosts.filter(p => p.type === 'cartoon'));
+  }
+
+  // NEWS
+  if (page === 'news.html') {
+    const data = await loadJSON('data/news.json');
+    renderNews(data?.news || [], 'newsList');
+  }
+
+  // REQUEST
+  if (page === 'request.html') {
+    const data = await loadJSON('data/requests.json');
+    renderRequests(data?.requests || [], 'recentRequests');
+  }
+});

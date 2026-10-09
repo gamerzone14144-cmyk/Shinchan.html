@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Request — Dorutochan</title>
+<link rel="icon" href="assets/favicon.png">
+<link rel="stylesheet" href="style.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=Bebas+Neue&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <a href="index.html" class="brand"><img src="assets/logo.png" alt="Dorutochan" class="brand-logo"></a>
+    <nav class="nav" id="navMenu">
+      <a href="index.html">Home</a>
+      <a href="anime.html">Anime</a>
+      <a href="cartoon.html">Cartoon</a>
+      <a href="news.html">News</a>
+      <a href="request.html" class="active">Request</a>
+      <a href="comments.html">Comments</a>
+    </nav>
+    <div class="header-right">
+      <a href="https://t.me/Dorutochan" target="_blank" class="btn-join">Join</a>
+      <button class="menu-btn" id="menuBtn">☰</button>
+    </div>
+  </div>
+</header>
+
+<section class="page-header">
+  <img src="assets/logo.png" alt="Dorutochan" class="middle-logo">
+  <h1 class="page-title">📩 Request Kya Chahiye?</h1>
+  <p class="page-sub">Anime, cartoon ya movie — jo bhi chahiye, hum laayenge.</p>
+</section>
+
+<main class="container-narrow">
+  <form class="request-form" id="requestForm">
+    <div class="form-row">
+      <div class="form-group">
+        <label>Naam (optional)</label>
+        <input type="text" name="name" placeholder="Aapka naam">
+      </div>
+      <div class="form-group">
+        <label>Email (optional)</label>
+        <input type="email" name="email" placeholder="you@example.com">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Type</label>
+        <select name="type" required>
+          <option value="">Select karo...</option>
+          <option>Anime</option>
+          <option>Cartoon</option>
+          <option>Movie</option>
+          <option>Series</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Title / Naam *</label>
+        <input type="text" name="title" required placeholder="e.g. Demon Slayer S4">
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Details (language, quality etc.)</label>
+      <textarea name="description" rows="3" placeholder="Hindi dub, 1080p, Episode 5-10..."></textarea>
+    </div>
+    <button type="submit" class="btn-submit" id="reqSubmit">
+      <span class="btn-text">📩 Request Bhejo</span>
+      <span class="btn-loading" style="display:none">Bhej rahe hain...</span>
+    </button>
+    <p class="form-msg" id="reqMsg"></p>
+  </form>
+
+  <div class="recent-requests">
+    <h3>📋 Recent Requests</h3>
+    <div id="recentRequests" class="req-list"></div>
+  </div>
+</main>
+
+<footer class="footer">
+  <img src="assets/logo.png" alt="Dorutochan" class="footer-logo">
+  <p class="footer-tag">Cartoons & Anime — Har Din Kuch Naya</p>
+  <p class="footer-since">Since 2022–23</p>
+  <div class="footer-links">
+    <a href="https://t.me/Dorutochan" target="_blank">Telegram</a>
+    <a href="anime.html">Anime</a>
+    <a href="cartoon.html">Cartoon</a>
+    <a href="news.html">News</a>
+    <a href="request.html">Request</a>
+    <a href="comments.html">Comments</a>
+  </div>
+  <p class="footer-copy">© <span id="year"></span> Dorutochan · Made with ❤️</p>
+</footer>
+
+<button class="to-top" id="toTop">↑</button>
+<script src="app.js"></script>
+</body>
+</html>
