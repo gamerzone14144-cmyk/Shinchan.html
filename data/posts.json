@@ -6,7 +6,7 @@
       "type": "anime",
       "image": "https://image.tmdb.org/t/p/w500/xUfRZu2mi8jH6SzQEJGP6tjBuYj.jpg",
       "link": "https://t.me/Dorutochan/1",
-      "date": "2025-01-15",
+      "date": "2026-10-09",
       "tags": ["action", "hindi-dub"],
       "trending": true
     },
@@ -16,7 +16,7 @@
       "type": "cartoon",
       "image": "https://image.tmdb.org/t/p/w500/example2.jpg",
       "link": "https://t.me/Dorutochan/2",
-      "date": "2025-01-14",
+      "date": "2026-10-08",
       "tags": ["comedy", "hindi"],
       "trending": true
     },
@@ -26,7 +26,7 @@
       "type": "anime",
       "image": "https://image.tmdb.org/t/p/w500/example3.jpg",
       "link": "https://t.me/Dorutochan/3",
-      "date": "2025-01-13",
+      "date": "2026-10-07",
       "tags": ["adventure"],
       "trending": false
     }
