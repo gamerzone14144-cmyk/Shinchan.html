@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Owner Panel</title>
+<link rel="stylesheet" href="style.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=Bebas+Neue&display=swap" rel="stylesheet">
+<style>
+  /* ═══ OWNER PANEL STYLES ═══ */
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Inter', sans-serif; background: #0a0a0f; color: #fff; min-height: 100vh; }
+  :root {
+    --bg: #0a0a0f; --card: #16161f; --card-2: #1c1c2a;
+    --accent: #e50914; --accent-2: #7c5cff;
+    --text: #fff; --muted: #9999aa; --border: #22222e;
+    --green: #10b981; --yellow: #f59e0b;
+    --grad: linear-gradient(135deg, #e50914 0%, #7c5cff 100%);
+  }
+  a { color: inherit; text-decoration: none; }
+
+  /* ─── LOGIN SCREEN ─── */
+  #loginScreen {
+    position: fixed; inset: 0; z-index: 1000;
+    background: radial-gradient(circle at 30% 20%, rgba(229,9,20,.2), transparent 50%),
+                radial-gradient(circle at 70% 80%, rgba(124,92,255,.2), transparent 50%),
+                #0a0a0f;
+    display: flex; align-items: center; justify-content: center;
+    padding: 1rem;
+  }
+  .login-box {
+    background: rgba(22,22,31,.9);
+    border: 1px solid #2e2e44;
+    border-radius: 20px;
+    padding: 3rem 2.5rem;
+    width: 100%; max-width: 400px;
+    text-align: center;
+    backdrop-filter: blur(20px);
+    box-shadow: 0 30px 80px rgba(0,0,0,.7), 0 0 0 1px rgba(229,9,20,.15);
+    animation: fadeUp .5s cubic-bezier(.2,.9,.3,1.3);
+  }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(30px) } to { opacity: 1; transform: translateY(0) } }
+  .login-icon { font-size: 3rem; margin-bottom: .5rem; }
+  .login-box h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem; letter-spacing: .05em;
+    background: var(--grad);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    margin-bottom: .3rem;
+  }
+  .login-box p { color: var(--muted); font-size: .9rem; margin-bottom: 2rem; }
+  .login-field { position: relative; margin-bottom: 1rem; text-align: left; }
+  .login-field label {
+    display: block; font-size: .75rem; color: var(--muted);
+    margin-bottom: .35rem; font-weight: 600;
+    text-transform: uppercase; letter-spacing: .08em;
+  }
+  .login-field input {
+    width: 100%; background: #0c0c14; border: 1px solid #26263a;
+    color: #fff; padding: .85rem 1rem; border-radius: 10px;
+    font-family: inherit; font-size: 1rem; outline: none; transition: .2s;
+  }
+  .login-field input:focus { border-color: var(--accent-2); box-shadow: 0 0 0 3px rgba(124,92,255,.15); }
+  .login-btn {
+    width: 100%; padding: 1rem; background: var(--grad);
+    border: none; color: #fff; font-family: inherit; font-weight: 700;
+    font-size: 1rem; border-radius: 10px; cursor: pointer;
+    margin-top: .8rem; transition: .2s;
+  }
+  .login-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(229,9,20,.4); }
+  .login-error { color: #f87171; font-size: .85rem; margin-top: 1rem; min-height: 1.2em; font-weight: 500; }
+  .login-hint { margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid #26263a; font-size: .75rem; color: #555; }
+
+  /* ─── DASHBOARD ─── */
+  #dashboard { display: none; min-height: 100vh; }
+  #dashboard.active { display: block; }
+  .topbar {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(10,10,15,.95); backdrop-filter: blur(14px);
+    border-bottom: 1px solid #22222e; padding: 1rem 2rem;
+    display: flex; align-items: center; gap: 1.5rem;
+  }
+  .topbar h1 {
+    font-family: 'Bebas Neue', sans-serif; font-size: 1.6rem;
+    letter-spacing: .03em; background: var(--grad);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    display: flex; align-items: center; gap: .5rem;
+  }
+  .topbar-right { margin-left: auto; display: flex; align-items: center; gap: 1rem; }
+  .user-badge {
+    background: #16161f; border: 1px solid #26263a;
+    padding: .45rem 1rem; border-radius: 999px;
+    font-size: .8rem; color: var(--muted);
+    display: flex; align-items: center; gap: .5rem;
+  }
+  .user-badge::before {
+    content: ''; width: 8px; height: 8px; border-radius: 50%;
+    background: var(--green); box-shadow: 0 0 8px var(--green);
+  }
+  .btn-logout {
+    background: rgba(229,9,20,.15); border: 1px solid rgba(229,9,20,.4);
+    color: #ff8a8a; padding: .5rem 1rem; border-radius: 8px;
+    cursor: pointer; font-family: inherit; font-size: .85rem;
+    font-weight: 600; transition: .2s;
+  }
+  .btn-logout:hover { background: rgba(229,9,20,.3); color: #fff; }
+
+  /* CONFIG BANNER */
+  .config-banner {
+    background: linear-gradient(90deg, rgba(245,158,11,.15), rgba(245,158,11,.05));
+    border-bottom: 1px solid rgba(245,158,11,.3);
+    padding: 1rem 2rem; display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;
+  }
+  .config-banner.hidden { display: none; }
+  .config-banner strong { color: var(--yellow); }
+  .config-banner input {
+    flex: 1; min-width: 200px; background: #0c0c14;
+    border: 1px solid #26263a; color: #fff;
+    padding: .6rem 1rem; border-radius: 8px;
+    font-family: inherit; outline: none; font-size: .9rem;
+  }
+  .config-banner input:focus { border-color: var(--accent-2); }
+  .config-banner button {
+    background: var(--yellow); color: #000; border: none;
+    padding: .6rem 1.2rem; border-radius: 8px;
+    font-weight: 700; cursor: pointer; font-family: inherit; font-size: .9rem;
+  }
+
+  /* TABS */
+  .tabs {
+    display: flex; gap: .3rem; padding: 1.2rem 2rem 0;
+    border-bottom: 1px solid #22222e; overflow-x: auto; scrollbar-width: none;
+  }
+  .tabs::-webkit-scrollbar { display: none; }
+  .tab {
+    padding: .75rem 1.3rem; background: none; border: none;
+    color: var(--muted); font-family: inherit; font-size: .9rem;
+    font-weight: 600; cursor: pointer; border-bottom: 2px solid transparent;
+    transition: .2s; white-space: nowrap; display: flex; align-items: center; gap: .4rem;
+  }
+  .tab:hover { color: #ddd; }
+  .tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+  .tab .count {
+    background: #26263a; color: #aaa; font-size: .7rem;
+    padding: .15rem .5rem; border-radius: 999px;
+  }
+  .tab.active .count { background: rgba(229,9,20,.2); color: #ff6b6b; }
+
+  /* MAIN CONTENT */
+  .content { padding: 2rem; max-width: 1200px; margin: 0 auto; }
+  .pane { display: none; }
+  .pane.active { display: block; animation: fadeIn .3s; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(10px) } to { opacity: 1; transform: translateY(0) } }
+
+  /* STATS */
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+  .stat-card {
+    background: var(--card); border: 1px solid #22222e;
+    border-radius: 14px; padding: 1.3rem;
+    position: relative; overflow: hidden;
+  }
+  .stat-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0;
+    height: 3px; background: var(--grad);
+  }
+  .stat-label { color: var(--muted); font-size: .8rem; text-transform: uppercase; letter-spacing: .08em; font-weight: 600; }
+  .stat-value { font-size: 2rem; font-weight: 800; margin-top: .4rem; background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+  /* SECTION HEADER */
+  .sec-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.2rem; flex-wrap: wrap; gap: 1rem; }
+  .sec-header h2 { font-size: 1.3rem; display: flex; align-items: center; gap: .5rem; }
+  .sec-header .btn-new {
+    background: var(--grad); border: none; color: #fff;
+    padding: .7rem 1.4rem; border-radius: 10px;
+    font-weight: 700; cursor: pointer; font-family: inherit; font-size: .9rem;
+    transition: .2s; display: flex; align-items: center; gap: .4rem;
+  }
+  .sec-header .btn-new:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(229,9,20,.4); }
+
+  /* FORM */
+  .form-card {
+    background: var(--card); border: 1px solid #22222e;
+    border-radius: 14px; padding: 1.5rem; margin-bottom: 1.5rem; display: none;
+  }
+  .form-card.open { display: block; animation: fadeIn .3s; }
+  .form-card h3 { font-size: 1.05rem; margin-bottom: 1rem; color: #ddd; }
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .fld { display: flex; flex-direction: column; margin-bottom: .8rem; }
+  .fld.full { grid-column: 1 / -1; }
+  .fld label { font-size: .78rem; color: var(--muted); margin-bottom: .35rem; font-weight: 600; }
+  .fld input, .fld select, .fld textarea {
+    background: #0c0c14; border: 1px solid #26263a;
+    color: #fff; padding: .7rem 1rem; border-radius: 9px;
+    font-family: inherit; font-size: .92rem; outline: none; transition: .2s;
+  }
+  .fld input:focus, .fld select:focus, .fld textarea:focus {
+    border-color: var(--accent-2); box-shadow: 0 0 0 3px rgba(124,92,255,.15);
+  }
+  .fld textarea { resize: vertical; min-height: 80px; }
+  .fld-check { display: flex; align-items: center; gap: .6rem; margin: .5rem 0 1rem; color: #ccc; font-size: .9rem; cursor: pointer; }
+  .fld-check input { width: auto; }
+
+  .form-actions { display: flex; gap: .7rem; margin-top: 1rem; flex-wrap: wrap; }
+  .btn-save {
+    background: var(--grad); border: none; color: #fff;
+    padding: .75rem 1.6rem; border-radius: 9px;
+    font-weight: 700; cursor: pointer; font-family: inherit;
+    font-size: .9rem; transition: .2s;
+  }
+  .btn-save:hover { transform: translateY(-2px); }
+  .btn-save:disabled { opacity: .6; cursor: not-allowed; transform: none; }
+  .btn-cancel {
+    background: rgba(255,255,255,.06); border: 1px solid #26263a;
+    color: #ccc; padding: .75rem 1.4rem; border-radius: 9px;
+    cursor: pointer; font-family: inherit; font-size: .9rem; font-weight: 600;
+  }
+  .btn-cancel:hover { background: rgba(255,255,255,.1); color: #fff; }
+
+  /* ITEM LIST */
+  .item-list { display: flex; flex-direction: column; gap: .8rem; }
+  .item {
+    background: var(--card); border: 1px solid #22222e;
+    border-radius: 12px; padding: 1rem 1.2rem;
+    display: flex; gap: 1rem; align-items: center; transition: .2s;
+  }
+  .item:hover { border-color: #2e2e44; background: var(--card-2); }
+  .item-thumb {
+    width: 55px; height: 75px; border-radius: 6px;
+    object-fit: cover; background: #22222e; flex-shrink: 0;
+  }
+  .item-body { flex: 1; min-width: 0; }
+  .item-title {
+    font-weight: 700; font-size: .98rem; margin-bottom: .25rem;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  .item-meta {
+    font-size: .78rem; color: var(--muted);
+    display: flex; gap: .6rem; flex-wrap: wrap; align-items: center;
+  }
+  .chip {
+    background: #22222e; padding: .15rem .55rem;
+    border-radius: 999px; font-size: .7rem; font-weight: 600;
+  }
+  .chip.type-anime { background: rgba(124,92,255,.2); color: #b6a4ff; }
+  .chip.type-cartoon { background: rgba(229,9,20,.2); color: #ff8888; }
+  .chip.trending { background: rgba(245,158,11,.2); color: #fcd34d; }
+  .item-actions { display: flex; gap: .5rem; flex-shrink: 0; }
+  .btn-icon {
+    width: 38px; height: 38px; border-radius: 9px;
+    border: 1px solid #26263a; background: #0c0c14;
+    color: #ccc; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem; transition: .2s;
+  }
+  .btn-icon:hover { transform: translateY(-2px); }
+  .btn-icon.edit:hover { background: rgba(124,92,255,.15); border-color: var(--accent-2); color: #b6a4ff; }
+  .btn-icon.del:hover { background: rgba(229,9,20,.15); border-color: var(--accent); color: #ff8888; }
+
+  .empty-state {
+    text-align: center; padding: 3rem 1rem; color: var(--muted);
+    background: var(--card); border: 1px dashed #26263a; border-radius: 12px;
+  }
+  .empty-state .emoji { font-size: 2.5rem; margin-bottom: .5rem; }
+
+  /* TOAST */
+  .toast {
+    position: fixed; bottom: 25px; right: 25px;
+    background: var(--card); border: 1px solid var(--green);
+    color: #fff; padding: 1rem 1.4rem; border-radius: 12px;
+    font-weight: 600; font-size: .92rem;
+    box-shadow: 0 20px 60px rgba(0,0,0,.7);
+    opacity: 0; pointer-events: none; transform: translateY(20px);
+    transition: .3s; z-index: 2000; max-width: 350px;
+  }
+  .toast.show { opacity: 1; pointer-events: auto; transform: translateY(0); }
+  .toast.err { border-color: var(--accent); }
+
+  /* LOADING */
+  .loading-overlay {
+    position: fixed; inset: 0; background: rgba(10,10,15,.8);
+    backdrop-filter: blur(4px); display: none;
+    align-items: center; justify-content: center; z-index: 1500;
+  }
+  .loading-overlay.show { display: flex; }
+  .spinner {
+    width: 50px; height: 50px;
+    border: 3px solid #26263a; border-top-color: var(--accent);
+    border-radius: 50%; animation: spin 0.8s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg) } }
+
+  @media (max-width: 700px) {
+    .topbar { padding: .8rem 1rem; }
+    .topbar h1 { font-size: 1.2rem; }
+    .user-badge { display: none; }
+    .tabs { padding: 1rem 1rem 0; }
+    .content { padding: 1.2rem; }
+    .form-grid { grid-template-columns: 1fr; }
+    .config-banner { padding: .8rem 1rem; }
+    .item { padding: .8rem; gap: .7rem; }
+    .item-thumb { width: 45px; height: 60px; }
+    .btn-icon { width: 34px; height: 34px; font-size: .9rem; }
+    .sec-header h2 { font-size: 1.1rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- LOGIN SCREEN -->
+<div id="loginScreen">
+  <div class="login-box">
+    <div class="login-icon">🔐</div>
+    <h1>Owner Panel</h1>
+    <p>Sirf owner ke liye — login karo</p>
+
+    <div class="login-field">
+      <label>Owner ID</label>
+      <input type="text" id="loginId" placeholder="Enter ID" autocomplete="off" inputmode="numeric">
+    </div>
+    <div class="login-field">
+      <label>Password</label>
+      <input type="password" id="loginPass" placeholder="Enter password" autocomplete="off">
+    </div>
+
+    <button class="login-btn" id="loginBtn">Login →</button>
+    <div class="login-error" id="loginError"></div>
+    <div class="login-hint">🔒 Authorized access only</div>
+  </div>
+</div>
+
+<!-- DASHBOARD -->
+<div id="dashboard">
+
+  <div class="topbar">
+    <h1>🛠 Owner Panel</h1>
+    <div class="topbar-right">
+      <div class="user-badge">Owner</div>
+      <button class="btn-logout" id="logoutBtn">Logout</button>
+    </div>
+  </div>
+
+  <div class="config-banner" id="configBanner">
+    <strong>⚙️ Setup:</strong>
+    <input type="password" id="tokenInput" placeholder="GitHub Token (ghp_...)">
+    <input type="text" id="repoInput" placeholder="username/repo" style="max-width:280px">
+    <button id="saveCfgBtn">Save</button>
+    <span id="cfgStatus" style="color:#999;font-size:.85rem"></span>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" data-pane="dashboard">📊 Dashboard</button>
+    <button class="tab" data-pane="posts">🎬 Posts <span class="count" id="cntPosts">0</span></button>
+    <button class="tab" data-pane="news">📰 News <span class="count" id="cntNews">0</span></button>
+    <button class="tab" data-pane="requests">📋 Requests <span class="count" id="cntReq">0</span></button>
+  </div>
+
+  <div class="content">
+
+    <!-- DASHBOARD PANE -->
+    <div class="pane active" id="pane-dashboard">
+      <div class="stats">
+        <div class="stat-card"><div class="stat-label">Total Posts</div><div class="stat-value" id="statPosts">0</div></div>
+        <div class="stat-card"><div class="stat-label">Anime</div><div class="stat-value" id="statAnime">0</div></div>
+        <div class="stat-card"><div class="stat-label">Cartoon</div><div class="stat-value" id="statCartoon">0</div></div>
+        <div class="stat-card"><div class="stat-label">News</div><div class="stat-value" id="statNews">0</div></div>
+        <div class="stat-card"><div class="stat-label">Requests</div><div class="stat-value" id="statReq">0</div></div>
+        <div class="stat-card"><div class="stat-label">Trending</div><div class="stat-value" id="statTrending">0</div></div>
+      </div>
+      <div class="sec-header"><h2>🚀 Quick Actions</h2></div>
+      <div style="display:flex;gap:.7rem;flex-wrap:wrap">
+        <button class="btn-new" onclick="openForm('posts')">➕ New Post</button>
+        <button class="btn-new" onclick="openForm('news')">➕ New News</button>
+        <button class="btn-new" onclick="openForm('requests')">➕ New Request</button>
+        <a href="index.html" target="_blank" class="btn-new" style="background:rgba(255,255,255,.08)">🌐 View Site</a>
+      </div>
+    </div>
+
+    <!-- POSTS PANE -->
+    <div class="pane" id="pane-posts">
+      <div class="sec-header">
+        <h2>🎬 Posts Manager</h2>
+        <button class="btn-new" onclick="openForm('posts')">➕ Add Post</button>
+      </div>
+      <div class="form-card" id="form-posts">
+        <h3 id="postsFormTitle">➕ Add New Post</h3>
+        <input type="hidden" id="pIdx" value="-1">
+        <div class="form-grid">
+          <div class="fld full"><label>Title *</label><input id="pTitle" placeholder="e.g. Demon Slayer S4"></div>
+          <div class="fld full"><label>Image URL (2:3 portrait) *</label><input id="pImage" placeholder="https://..."></div>
+          <div class="fld full"><label>Telegram Link *</label><input id="pLink" placeholder="https://t.me/YourChannel/123"></div>
+          <div class="fld">
+            <label>Type *</label>
+            <select id="pType"><option value="anime">Anime</option><option value="cartoon">Cartoon</option></select>
+          </div>
+          <div class="fld"><label>Tags (comma separated)</label><input id="pTags" placeholder="action, hindi-dub"></div>
+          <div class="fld full"><label>Date</label><input type="date" id="pDate"></div>
+        </div>
+        <label class="fld-check"><input type="checkbox" id="pTrending"> Trending me dikhao</label>
+        <div class="form-actions">
+          <button class="btn-save" id="pSaveBtn" onclick="savePost()">💾 Save Post</button>
+          <button class="btn-cancel" onclick="closeForm('posts')">Cancel</button>
+        </div>
+      </div>
+      <div class="item-list" id="postsList"></div>
+    </div>
+
+    <!-- NEWS PANE -->
+    <div class="pane" id="pane-news">
+      <div class="sec-header">
+        <h2>📰 News Manager</h2>
+        <button class="btn-new" onclick="openForm('news')">➕ Add News</button>
+      </div>
+      <div class="form-card" id="form-news">
+        <h3 id="newsFormTitle">➕ Add News</h3>
+        <input type="hidden" id="nIdx" value="-1">
+        <div class="fld"><label>Title *</label><input id="nTitle" placeholder="e.g. One Piece new arc added!"></div>
+        <div class="fld"><label>Body *</label><textarea id="nBody" placeholder="News details..."></textarea></div>
+        <div class="fld"><label>Date</label><input type="date" id="nDate"></div>
+        <div class="form-actions">
+          <button class="btn-save" id="nSaveBtn" onclick="saveNews()">💾 Save News</button>
+          <button class="btn-cancel" onclick="closeForm('news')">Cancel</button>
+        </div>
+      </div>
+      <div class="item-list" id="newsList"></div>
+    </div>
+
+    <!-- REQUESTS PANE -->
+    <div class="pane" id="pane-requests">
+      <div class="sec-header">
+        <h2>📋 Requests Manager</h2>
+        <button class="btn-new" onclick="openForm('requests')">➕ Add Request</button>
+      </div>
+      <div class="form-card" id="form-requests">
+        <h3 id="reqFormTitle">➕ Add Request</h3>
+        <input type="hidden" id="rIdx" value="-1">
+        <div class="form-grid">
+          <div class="fld full"><label>Title *</label><input id="rTitle" placeholder="e.g. Jujutsu Kaisen S3"></div>
+          <div class="fld">
+            <label>Type</label>
+            <select id="rType"><option>Anime</option><option>Cartoon</option><option>Movie</option><option>Series</option><option>Other</option></select>
+          </div>
+          <div class="fld"><label>Date</label><input type="date" id="rDate"></div>
+        </div>
+        <div class="form-actions">
+          <button class="btn-save" id="rSaveBtn" onclick="saveRequest()">💾 Save Request</button>
+          <button class="btn-cancel" onclick="closeForm('requests')">Cancel</button>
+        </div>
+      </div>
+      <div class="item-list" id="reqList"></div>
+    </div>
+
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+<div class="loading-overlay" id="loader"><div class="spinner"></div></div>
+
+<script>
+/* ═══ AUTH ═══ */
+const CREDS = {
+  id: atob("NjQwNzUzMzgzMQ=="),
+  pass: atob("VGFudmVlcjEyMw==")
+};
+const SESSION_KEY = 'doruto_owner_session';
+const SESSION_TTL = 24 * 60 * 60 * 1000;
+
+document.getElementById('loginBtn').addEventListener('click', doLogin);
+document.getElementById('loginPass').addEventListener('keypress', e => { if (e.key === 'Enter') doLogin(); });
+document.getElementById('loginId').addEventListener('keypress', e => { if (e.key === 'Enter') document.getElementById('loginPass').focus(); });
+
+function doLogin() {
+  const id = document.getElementById('loginId').value.trim();
+  const pass = document.getElementById('loginPass').value;
+  const err = document.getElementById('loginError');
+  if (id === CREDS.id && pass === CREDS.pass) {
+    localStorage.setItem(SESSION_KEY, JSON.stringify({ t: Date.now() }));
+    err.textContent = '';
+    showDashboard();
+  } else {
+    err.textContent = '❌ Galat ID ya password';
+    document.getElementById('loginPass').value = '';
+    document.getElementById('loginPass').focus();
+  }
+}
+
+function checkSession() {
+  try {
+    const s = JSON.parse(localStorage.getItem(SESSION_KEY) || 'null');
+    if (s && (Date.now() - s.t) < SESSION_TTL) return true;
+  } catch {}
+  return false;
+}
+
+function logout() { localStorage.removeItem(SESSION_KEY); location.reload(); }
+document.getElementById('logoutBtn').addEventListener('click', logout);
+
+function showDashboard() {
+  document.getElementById('loginScreen').style.display = 'none';
+  document.getElementById('dashboard').classList.add('active');
+  initPanel();
+}
+
+/* ═══ GITHUB CONFIG ═══ */
+const API = 'https://api.github.com/repos/';
+let cfg = { token: '', repo: '' };
+
+function loadCfg() {
+  cfg.token = localStorage.getItem('gh_token') || '';
+  cfg.repo = localStorage.getItem('gh_repo') || '';
+  document.getElementById('tokenInput').value = cfg.token;
+  document.getElementById('repoInput').value = cfg.repo;
+  updateCfgStatus();
+}
+
+function updateCfgStatus() {
+  const el = document.getElementById('cfgStatus');
+  const banner = document.getElementById('configBanner');
+  if (cfg.token && cfg.repo) banner.classList.add('hidden');
+  else { banner.classList.remove('hidden'); el.textContent = 'Token + Repo dono chahiye'; }
+}
+
+document.getElementById('saveCfgBtn').addEventListener('click', () => {
+  cfg.token = document.getElementById('tokenInput').value.trim();
+  cfg.repo = document.getElementById('repoInput').value.trim();
+  localStorage.setItem('gh_token', cfg.token);
+  localStorage.setItem('gh_repo', cfg.repo);
+  updateCfgStatus();
+  toast('✅ Config saved');
+  loadAll();
+});
+
+/* ═══ DATA ═══ */
+let data = {
+  posts: { items: [], sha: null },
+  news: { items: [], sha: null },
+  requests: { items: [], sha: null }
+};
+
+async function ghGet(path) {
+  if (!cfg.token || !cfg.repo) return null;
+  const r = await fetch(`${API}${cfg.repo}/contents/${path}?t=${Date.now()}`, {
+    headers: { Authorization: `token ${cfg.token}` }
+  });
+  if (!r.ok) return null;
+  const j = await r.json();
+  const content = decodeURIComponent(escape(atob(j.content.replace(/\n/g, ''))));
+  return { sha: j.sha, data: JSON.parse(content) };
+}
+
+async function ghPut(path, obj, sha, msg) {
+  const body = {
+    message: msg,
+    content: btoa(unescape(encodeURIComponent(JSON.stringify(obj, null, 2)))),
+    ...(sha ? { sha } : {})
+  };
+  const r = await fetch(`${API}${cfg.repo}/contents/${path}`, {
+    method: 'PUT',
+    headers: { Authorization: `token ${cfg.token}`, 'Content-Type': 'application/json' },
+    body: JSON.stringify(body)
+  });
+  if (!r.ok) { const e = await r.json(); throw new Error(e.message || 'GitHub error'); }
+  return r.json();
+}
+
+/* ═══ INIT ═══ */
+function initPanel() {
+  loadCfg();
+  document.querySelectorAll('.tab').forEach(tab => {
+    tab.addEventListener('click', () => switchTab(tab.dataset.pane));
+  });
+  const today = new Date().toISOString().slice(0, 10);
+  ['pDate', 'nDate', 'rDate'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = today;
+  });
+  loadAll();
+}
+
+function switchTab(pane) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.pane === pane));
+  document.querySelectorAll('.pane').forEach(p => p.classList.toggle('active', p.id === 'pane-' + pane));
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+async function loadAll() {
+  if (!cfg.token || !cfg.repo) return;
+  showLoader(true);
+  try {
+    const [p, n, r] = await Promise.all([
+      ghGet('data/posts.json'), ghGet('data/news.json'), ghGet('data/requests.json')
+    ]);
+    data.posts.items = p?.data.posts || [];
+    data.posts.sha = p?.sha || null;
+    data.news.items = n?.data.news || [];
+    data.news.sha = n?.sha || null;
+    data.requests.items = r?.data.requests || [];
+    data.requests.sha = r?.sha || null;
+    renderAll();
+  } catch (e) { toast('❌ ' + e.message, true); }
+  finally { showLoader(false); }
+}
+
+/* ═══ RENDER ═══ */
+function renderAll() { renderPosts(); renderNews(); renderRequests(); renderStats(); }
+
+function renderStats() {
+  const posts = data.posts.items;
+  document.getElementById('statPosts').textContent = posts.length;
+  document.getElementById('statAnime').textContent = posts.filter(p => p.type === 'anime').length;
+  document.getElementById('statCartoon').textContent = posts.filter(p => p.type === 'cartoon').length;
+  document.getElementById('statTrending').textContent = posts.filter(p => p.trending).length;
+  document.getElementById('statNews').textContent = data.news.items.length;
+  document.getElementById('statReq').textContent = data.requests.items.length;
+  document.getElementById('cntPosts').textContent = posts.length;
+  document.getElementById('cntNews').textContent = data.news.items.length;
+  document.getElementById('cntReq').textContent = data.requests.items.length;
+}
+
+function renderPosts() {
+  const box = document.getElementById('postsList');
+  const items = data.posts.items;
+  if (!items.length) {
+    box.innerHTML = `<div class="empty-state"><div class="emoji">🎬</div>Koi post nahi. "Add Post" se shuru karo.</div>`;
+    return;
+  }
+  box.innerHTML = items.map((p, i) => `
+    <div class="item">
+      <img class="item-thumb" src="${escapeAttr(p.image || 'https://via.placeholder.com/100x150/16161f/7c5cff?text=D')}" alt="" onerror="this.src='https://via.placeholder.com/100x150/16161f/7c5cff?text=D'">
+      <div class="item-body">
+        <div class="item-title">${esc(p.title)}</div>
+        <div class="item-meta">
+          <span class="chip type-${p.type}">${p.type || ''}</span>
+          ${p.trending ? '<span class="chip trending">🔥 Trending</span>' : ''}
+          <span>${p.date || ''}</span>
+          ${p.tags?.length ? `<span>· ${p.tags.slice(0,2).map(esc).join(', ')}</span>` : ''}
+        </div>
+      </div>
+      <div class="item-actions">
+        <button class="btn-icon edit" onclick="editPost(${i})" title="Edit">✏️</button>
+        <button class="btn-icon del" onclick="delPost(${i})" title="Delete">🗑️</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderNews() {
+  const box = document.getElementById('newsList');
+  const items = data.news.items;
+  if (!items.length) {
+    box.innerHTML = `<div class="empty-state"><div class="emoji">📰</div>Koi news nahi.</div>`;
+    return;
+  }
+  box.innerHTML = items.map((n, i) => `
+    <div class="item">
+      <div class="item-body">
+        <div class="item-title">${esc(n.title)}</div>
+        <div class="item-meta">
+          <span>${n.date || ''}</span>
+          <span>· ${esc((n.body || '').slice(0, 60))}${(n.body||'').length > 60 ? '...' : ''}</span>
+        </div>
+      </div>
+      <div class="item-actions">
+        <button class="btn-icon edit" onclick="editNews(${i})" title="Edit">✏️</button>
+        <button class="btn-icon del" onclick="delNews(${i})" title="Delete">🗑️</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderRequests() {
+  const box = document.getElementById('reqList');
+  const items = data.requests.items;
+  if (!items.length) {
+    box.innerHTML = `<div class="empty-state"><div class="emoji">📋</div>Koi request nahi.</div>`;
+    return;
+  }
+  box.innerHTML = items.map((r, i) => `
+    <div class="item">
+      <div class="item-body">
+        <div class="item-title">${esc(r.title)}</div>
+        <div class="item-meta">
+          <span class="chip">${esc(r.type || 'Other')}</span>
+          <span>${r.date || ''}</span>
+        </div>
+      </div>
+      <div class="item-actions">
+        <button class="btn-icon edit" onclick="editRequest(${i})" title="Edit">✏️</button>
+        <button class="btn-icon del" onclick="delRequest(${i})" title="Delete">🗑️</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+/* ═══ FORM ═══ */
+function openForm(type) {
+  switchTab(type);
+  document.getElementById('form-' + type).classList.add('open');
+}
+
+function closeForm(type) {
+  document.getElementById('form-' + type).classList.remove('open');
+  if (type === 'posts') { document.getElementById('pIdx').value = -1; document.getElementById('postsFormTitle').textContent = '➕ Add New Post'; clearPostForm(); }
+  if (type === 'news') { document.getElementById('nIdx').value = -1; document.getElementById('newsFormTitle').textContent = '➕ Add News'; clearNewsForm(); }
+  if (type === 'requests') { document.getElementById('rIdx').value = -1; document.getElementById('reqFormTitle').textContent = '➕ Add Request'; clearReqForm(); }
+}
+
+function clearPostForm() {
+  ['pTitle','pImage','pLink','pTags'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('pType').value = 'anime';
+  document.getElementById('pDate').value = new Date().toISOString().slice(0, 10);
+  document.getElementById('pTrending').checked = false;
+}
+function clearNewsForm() {
+  ['nTitle','nBody'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('nDate').value = new Date().toISOString().slice(0, 10);
+}
+function clearReqForm() {
+  document.getElementById('rTitle').value = '';
+  document.getElementById('rType').value = 'Anime';
+  document.getElementById('rDate').value = new Date().toISOString().slice(0, 10);
+}
+
+/* ═══ SAVE / EDIT / DELETE — POSTS ═══ */
+async function savePost() {
+  const title = document.getElementById('pTitle').value.trim();
+  const image = document.getElementById('pImage').value.trim();
+  const link  = document.getElementById('pLink').value.trim();
+  if (!title || !image || !link) return toast('❌ Title, Image, Link zaroori', true);
+
+  const idx = parseInt(document.getElementById('pIdx').value);
+  const post = {
+    id: idx >= 0 ? data.posts.items[idx].id : Date.now().toString(),
+    title, image, link,
+    type: document.getElementById('pType').value,
+    tags: document.getElementById('pTags').value.split(',').map(s => s.trim()).filter(Boolean),
+    date: document.getElementById('pDate').value || new Date().toISOString().slice(0,10),
+    trending: document.getElementById('pTrending').checked
+  };
+
+  if (idx >= 0) data.posts.items[idx] = post;
+  else data.posts.items.unshift(post);
+
+  await commit('posts', idx >= 0 ? `Update post: ${title}` : `Add post: ${title}`);
+}
+
+function editPost(i) {
+  const p = data.posts.items[i];
+  document.getElementById('pIdx').value = i;
+  document.getElementById('pTitle').value = p.title || '';
+  document.getElementById('pImage').value = p.image || '';
+  document.getElementById('pLink').value = p.link || '';
+  document.getElementById('pType').value = p.type || 'anime';
+  document.getElementById('pTags').value = (p.tags || []).join(', ');
+  document.getElementById('pDate').value = p.date || '';
+  document.getElementById('pTrending').checked = !!p.trending;
+  document.getElementById('postsFormTitle').textContent = '✏️ Edit Post';
+  openForm('posts');
+  document.querySelector('.content').scrollIntoView({ behavior: 'smooth' });
+}
+
+async function delPost(i) {
+  const p = data.posts.items[i];
+  if (!confirm(`"${p.title}" delete karna hai?`)) return;
+  data.posts.items.splice(i, 1);
+  await commit('posts', `Delete post: ${p.title}`);
+}
+
+/* ═══ SAVE / EDIT / DELETE — NEWS ═══ */
+async function saveNews() {
+  const title = document.getElementById('nTitle').value.trim();
+  const body  = document.getElementById('nBody').value.trim();
+  if (!title || !body) return toast('❌ Title + Body zaroori', true);
+
+  const idx = parseInt(document.getElementById('nIdx').value);
+  const news = {
+    id: idx >= 0 ? data.news.items[idx].id : Date.now().toString(),
+    title, body,
+    date: document.getElementById('nDate').value || new Date().toISOString().slice(0,10)
+  };
+
+  if (idx >= 0) data.news.items[idx] = news;
+  else data.news.items.unshift(news);
+
+  await commit('news', idx >= 0 ? `Update news: ${title}` : `Add news: ${title}`);
+}
+
+function editNews(i) {
+  const n = data.news.items[i];
+  document.getElementById('nIdx').value = i;
+  document.getElementById('nTitle').value = n.title || '';
+  document.getElementById('nBody').value = n.body || '';
+  document.getElementById('nDate').value = n.date || '';
+  document.getElementById('newsFormTitle').textContent = '✏️ Edit News';
+  openForm('news');
+  document.querySelector('.content').scrollIntoView({ behavior: 'smooth' });
+}
+
+async function delNews(i) {
+  const n = data.news.items[i];
+  if (!confirm(`"${n.title}" delete karna hai?`)) return;
+  data.news.items.splice(i, 1);
+  await commit('news', `Delete news: ${n.title}`);
+}
+
+/* ═══ SAVE / EDIT / DELETE — REQUESTS ═══ */
+async function saveRequest() {
+  const title = document.getElementById('rTitle').value.trim();
+  if (!title) return toast('❌ Title zaroori', true);
+
+  const idx = parseInt(document.getElementById('rIdx').value);
+  const req = {
+    title,
+    type: document.getElementById('rType').value,
+    date: document.getElementById('rDate').value || new Date().toISOString().slice(0,10)
+  };
+
+  if (idx >= 0) data.requests.items[idx] = req;
+  else data.requests.items.unshift(req);
+
+  await commit('requests', idx >= 0 ? `Update request: ${title}` : `Add request: ${title}`);
+}
+
+function editRequest(i) {
+  const r = data.requests.items[i];
+  document.getElementById('rIdx').value = i;
+  document.getElementById('rTitle').value = r.title || '';
+  document.getElementById('rType').value = r.type || 'Anime';
+  document.getElementById('rDate').value = r.date || '';
+  document.getElementById('reqFormTitle').textContent = '✏️ Edit Request';
+  openForm('requests');
+  document.querySelector('.content').scrollIntoView({ behavior: 'smooth' });
+}
+
+async function delRequest(i) {
+  const r = data.requests.items[i];
+  if (!confirm(`"${r.title}" delete karna hai?`)) return;
+  data.requests.items.splice(i, 1);
+  await commit('requests', `Delete request: ${r.title}`);
+}
+
+/* ═══ COMMIT TO GITHUB ═══ */
+async function commit(type, msg) {
+  if (!cfg.token || !cfg.repo) return toast('❌ Pehle GitHub token + repo set karo', true);
+
+  showLoader(true);
+  try {
+    const path = `data/${type}.json`;
+    const body = { [type]: data[type].items };
+    const res = await ghPut(path, body, data[type].sha, msg);
+    data[type].sha = res.content.sha;
+    renderAll();
+    closeForm(type);
+    toast('✅ Saved! 30 sec me live hoga.');
+  } catch (e) {
+    toast('❌ ' + e.message, true);
+    await loadAll();
+  } finally {
+    showLoader(false);
+  }
+}
+
+/* ═══ UTILS ═══ */
+function esc(s = '') {
+  return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+function escapeAttr(s = '') { return esc(s).replace(/"/g, '&quot;'); }
+
+let toastTimer;
+function toast(msg, isErr) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.toggle('err', !!isErr);
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+function showLoader(on) {
+  document.getElementById('loader').classList.toggle('show', !!on);
+}
+
+/* ═══ BOOT ═══ */
+if (checkSession()) {
+  showDashboard();
+} else {
+  document.getElementById('loginId').focus();
+}
+</script>
+</body>
+</html>
