@@ -1,7 +1,7 @@
 /* ═══ DORUTOCHAN APP ═══ */
 
-const FORMSPREE_ID = "YOUR_FORMSPREE_ID";
-const TELEGRAM = "https://t.me/Dorutochan";
+const FORMSPREE_ID = "mvkzrpql";
+const TELEGRAM = "https://t.me/DorutoChanCollections";
 let allPosts = [];
 
 // ─── Load JSON ───
